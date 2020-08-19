@@ -1,0 +1,150 @@
+\documentclass[11pt,twoside,lineno]{GSA_format}
+% Use the documentclass option 'lineno' to view line numbers
+
+\articletype{inv} % article type
+% {inv} Investigation 
+% {gs} Genomic Selection
+% {goi} Genetics of Immunity 
+% {gos} Genetics of Sex 
+% {mp} Multiparental Populations
+
+\newcommand{\bm}[1]{\mbox{\boldmath{$#1$}}}
+
+\title{Incorporating linkage into genotype-environment association studies}
+
+\author[$\ast$]{Tom R. Booker}
+\author[$\dagger$]{Samuel Yeaman}
+\author[$\ast$]{Michael C. Whitlock}
+
+\affil[$\ast$]{University of British Columbia}
+\affil[$\dagger$]{University of Calgary}
+
+\keywords{Local Adaptation, Population Genetics, Environmental Genomics}
+
+\runningtitle{Incorporating linkage in GEA analyses} % For use in the footer 
+
+\runningauthor{Booker \textit{et al.}}
+
+\begin{abstract}
+Here is a really concise and nicely written summary of the paper, highlighting the main findings and take home messages.
+\end{abstract}
+
+\begin{document}
+
+\maketitle
+%\thispagestyle{firststyle}
+\marginmark
+\firstpagefootnote
+
+
+%\correspondingauthoraffiliation{1}{Corresponding author: booker@zoology.ubc.ca}
+\vspace{-33pt}% Only used for adjusting extra space in the left column of the first page
+
+\section{Introduction}
+
+With the advent of high-throughput sequencing technologies and methods to analyse the resulting data.
+
+Understanding the genetic architecture of adaptation is 
+
+There are a number of factors that potentially contribute tot he architecture of local adaptation
+
+A
+
+N
+
+Going forwards, 
+
+\subsection{Correlated coalescent histories for linked sites}
+
+Linked sites do not evolve independently. If the rate of recombination is low relative to the rate of migration, we postulate that within a certain genetic distance, $c$, there will be strong autocorrelation in the coalescent histories among sites. If that is the case, SNPs that are within $c$ Morgans of each other may behave effectively as independent draws from the same distribution. Under that assumption, calculating the correlation of allele frequencies with at SNP $i$ provides a test of the hypothesis, is this particular genomic region correlated with the.
+
+Under that assumption, all of the neutral SNPs present within a distance $c$ of each other provide an independent test of the hypothesis, "is the genetic variation in this particular region associated with the environment?".
+
+There are two reasons why tightly linked markers may exhibit similarly strong associations with the environment. Firstly, alleles that contribute to local adaptation that establish may generate LD, so closely linked markers. Secondly, theory suggests that when local adaptation is facilitated by a slleles of small effect architecture, there is a selective advantage for those alleles to cluster in the genome. This effect may manifest itself as multiple alleles 
+
+
+\section{Materials and Methods}
+\label{sec:materials:methods}
+
+
+\subsection{The WZA} 
+
+The weighted-Z test combines \textit{p}-values from multiple independent tests into a single score, where the contribution of each test to the total is given a weight that is proportional to the inverse of the error variance (Whitlock 2004). In this study, we propose using weighted-Z tests to combine information across sites for tightly linked regions of the genome. For genomic region, \textit{k}, which contains \textit{n} polymorphic sites we calculate the following,
+
+\begin{equation}
+\label{weightedZ}
+Z_{w,k} =  \frac {\sum\limits_{i=1}^n \overline{p_i} \overline{q_i}z_i}{\sqrt{ \sum\limits_{i=1}^n (\overline{p_i}\overline{q_i})^2} }
+\end{equation}
+where $\overline{p_i}$ and $\overline{q_i}$ are the average allele frequencies across demes for polymorphism \textit{i} and $z_i$ is the standard normal deviate.
+
+
+
+\subsection{The top-candidate test} 
+
+Yeaman et al (2016) proposed a method for combining information across sites in genotype-environment association studies. The top-candidate test, as they called it. attempts to identify regions of the genome involved in local adaptation under the assumption that alleles in such regions will tend to generate LD with neighbouring sites, and thus multiple linked markers may exhibit a significant correlation with important environmental variables. First, the genome-wide distribution of SNPs is examined to identify outliers. SNPs with \textit{p}-values in the 99th percentile genome-wide are classified as outliers. Then, the frequency of outlier SNPs in analysis windows is calculated. In Yeaman et al (2016), sequence up and downstream of genes were used as analysis windows
+ but since we make use of it in this paper, we provide 
+
+There are philosophical reasons as to why the WZA should be preferred. First, the Top-candidate test assumes that there is a fraction of the genetic markers analysed that are tagging causal variants (i.e. that there are true positives in the dataset). This is undesirable, because there may well be no detectable variation that contributes to local adaptation present, i.e. the study may simply be underpowered. Secondly, the test gives equal weight to all markers. However, alleles at different frequencies possess different levels of information about population history. A final related point is that all SNPs that have exceeded the significance threshold are treated identically. For example, with a significance threshold of 0.01, genomic regions with only a single outlier are treated in the same way whether that outlier has a \textit{p}-value of 0.009 or $10^{-10}$.
+
+\subsection{Simulating local adaptation} 
+
+Simulations were performed in SLiM v3.4 (Messer and Haller). 
+We simulated genomes with four chromosomes, modelled using \textit{c} = 0.5 breakpoints. 
+Local adaptation can act as a barrier to gene-flow, individuals that migrate from locations where they are well adapted into locations where they are disfavoured may not survive to propagate, so even freely recombining regions of the genome are linked to a degree and will influence evolution in regions of the genome that are freely recombining. To model local adaptation in unlinked regions of the genome, we modelled three cartoon chromosomes. The cartoon chromosomes were short sequences, 1,000bp long, that had a genetic map and net mutation rate (\textit{$U_a$}) that was the as the focal chromosome. 
+
+We simulated three kinds of environment. The first was a reduced representation of climatic variation across British Columbia, Canada. We downloaded the map of degree days greater than 0 (DD0) for British Columbia from ClimateBC (website; REF). From the DD0 map, we extracted the data for a 99x99 grid using Dog Mountain, BC as the reference point in the South-West corner. We divided this map into a 14x14 grid. Each cell corresponded to an area of XX$km^2$. We calculated the mean DD0 for each cell in the grid. We then converted the mean DD0 scores into Z-scores and rounded values up to the nearest third. These data were then used as the phenotypic optima for population models in SLiM.
+
+We simulated local adaptation in four metapopulation models. The first is the island model, which represents an unstructured metapopulation. 
+
+Environments exhibit spatial autocorrelation. To model spatial autocorrelation in environment, we simulated a 2-dimensional stepping-stone model. 
+
+We simulated local adaptation across an 
+We constructed a map using data for real climate variation from British Columbia, Canada. We downloaded the map of degree days greater than 0 for British Columbia from ClimateBC (website; REF). From the DD0 map, we extracted the data for a 99x99 grid using Dog Mountain, BC as the reference point in the South-West corner. We divided this map into a 16x16 grid and calculated the mean DD0 for each cell. We converted the means into Z-scores and rounded values up to the nearest third of a Z-score. These data were then used as the phenotypic optima for a structured population models in SLiM.
+
+We simulated local adaptation using a model of stabilising selection. We modelled a genome of composed of four autosomes. 
+
+We used the standard expression for Gaussian stabilising selection,
+\begin{equation}
+\notag
+W(z_{i,j}) = exp \Big[\frac{-(z_{i,j} - \theta_j)^2}{2V_s}\Big],
+\end{equation}
+where $z_i$ is the phenotype of the $i^{th}$ individual in environment $j$, $\theta_j$ is the phenotypic optimum of environment $j$, and $V_s$ is the variance of the Gaussian fitness function. 
+
+To test the performance of the weighted-Z analysis (WZA), we modelled populations adapting to various environments. Figure \ref{fig:EnvGrid} shows a diagram of each of the populations simulated.
+
+
+\subsection{Proportion of variance explained} 
+
+In our simulations, phenotypic variance ($\sigma^{2}_{P}$) was generated solely by genotypes, i.e. there were no environmental effects. Local adaptation generates variance in phenotypes between populations ($\sigma^{2}_{PB}$). 
+As described above, the simulations incorporated a stochastic mutation model, so from replicate to replicate the effect size of alleles and their locations in the genome varied. As a result, the genes that contributed to local adaptation varied across simulation replicates. We therefore determined the contribution  each gene made to local adaptation by calculating the proportion of phenotypic variance among populations explained by the SNPs in each gene. For each gene that contributes to phenotypic variation there are $k$ causal SNPs each with a phenotypic effect of $\alpha_k$. We use $\bm{\nu_g}$ to refer to the column vector of phenotypic effects for each of the $k$ causal SNPs in gene $g$. In each population there are $n$ diploid individuals and we have $\bm{M_d}$, an $n \times k$ matrix in which the genotype of each individual at each causal SNP is coded as 0, 1 or 2 corresponding to aa, aA and AA genotypes, respectively. The contribution that each gene makes to the overall phenotype in each population is calculated as $C_{g,d} = \sum \bm{M_{g,d} \nu_{g,d}}$. The variance in $C_{g,d}$ gives us a measure of the phenotypic variance between popuatlions generated by each gene ($\sigma^{2}_{PB,g}$). We then calculate the proportion of variance explained by each gene ($PVE_g$) as $\sigma^{2}_{PB,g} / \sigma^{2}_{PB}$
+\begin{equation}
+PVE_g = \frac{\sigma^{2}_{PB,g}}{\sigma^{2}_{PB}}.
+\end{equation}
+
+Note that $PVE_g$ does not provide a measure of local adaptation, merely a measure of how much phenotypic variation between populations can be explained by a a particular gene. 
+
+\subsection{Data Availability}
+
+The simulation configuration files and code to perform the analysis of simulated data and generate the associated plots are available at github/TBooker/GEA. Tree-sequence files for the simulated populations are available at Dryad. 
+
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{../Plots/environmentGridPlot.png}
+  \caption{Three models of population structure used to simulated varying degrees of spatial autocorrelation in the environment. }
+  \label{fig:boat1}
+\end{figure}
+
+\section{Results}
+
+\section{Discussion}
+
+
+\section{Acknowledgements}
+
+Thanks to Tongli Wang for help with BC climate data and to Simon Kapitza for help with wrangling raster files. 
+
+
+
+%\bibliography{example-bibliography}
+
+\end{document}
