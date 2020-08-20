@@ -26,7 +26,11 @@
 \runningauthor{Booker \textit{et al.}}
 
 \begin{abstract}
-Here is a really concise and nicely written summary of the paper, highlighting the main findings and take home messages.
+Here is a really concise and nicely written summary of the paper, highlighting the main findings and take home messages. \\
+
+\textit{I'm just using the GENETICS template because it looks nice!}
+
+
 \end{abstract}
 
 \begin{document}
@@ -54,7 +58,7 @@ N
 
 Going forwards, 
 
-\subsection{Correlated coalescent histories for linked sites}
+\subsection{Correlated coalescent histories for linked sites under neutrality}
 
 Linked sites do not evolve independently. If the rate of recombination is low relative to the rate of migration, we postulate that within a certain genetic distance, $c$, there will be strong autocorrelation in the coalescent histories among sites. If that is the case, SNPs that are within $c$ Morgans of each other may behave effectively as independent draws from the same distribution. Under that assumption, calculating the correlation of allele frequencies with at SNP $i$ provides a test of the hypothesis, is this particular genomic region correlated with the.
 
@@ -62,10 +66,12 @@ Under that assumption, all of the neutral SNPs present within a distance $c$ of 
 
 There are two reasons why tightly linked markers may exhibit similarly strong associations with the environment. Firstly, alleles that contribute to local adaptation that establish may generate LD, so closely linked markers. Secondly, theory suggests that when local adaptation is facilitated by a slleles of small effect architecture, there is a selective advantage for those alleles to cluster in the genome. This effect may manifest itself as multiple alleles 
 
+\subsection{Why do we expect linkage disequilibrium under local adaptation?}
+
+Theoretical studies of local adaptation suggest that we should expect regions of the genome subject to spatially varying selection pressure to exhibit elevated linkage disequilibrium relative to the genomic background. There are several possible reasons why this might be the case. First, strong divergent selection can generate LD. For example, Barton and Bengstton (198X) showed that a locus subject to strong spatially varying selection can act as a local barrier to gene flow and generate LD with linked neutral sites. Such theoretical studies have typically only examined the role of alleles with spatially antagonistic effects on fitness. Conditionally neutral alleles, which may contribute to local adaptation, have not received the same theoretical treatment, but if selection acting on such sites were strong it would presumably generate LD in the regions where they arose. Second, there is a selective advantage for alleles that are involved in local adaptation to aggregate in regions of low recombination so favourable combinations of alleles are inherited together (Yeaman papers). For that reasons, we might expect multiple causal alleles in particular genomic regions, for example, in the protein-coding and regulatory regions of genes. In sunflowers, for example, there is evidence that suppressed recombination among alleles involved in local adaptation has arisen via the maintenance of large chromosomal inversions (Owens paper). In either case, we expect that strongly selected loci to exhibit elevated LD relative to the genomic background.
 
 \section{Materials and Methods}
 \label{sec:materials:methods}
-
 
 \subsection{The WZA} 
 
@@ -81,7 +87,7 @@ where $\overline{p_i}$ and $\overline{q_i}$ are the average allele frequencies a
 
 \subsection{The top-candidate test} 
 
-Yeaman et al (2016) proposed a method for combining information across sites in genotype-environment association studies. The top-candidate test, as they called it. attempts to identify regions of the genome involved in local adaptation under the assumption that alleles in such regions will tend to generate LD with neighbouring sites, and thus multiple linked markers may exhibit a significant correlation with important environmental variables. First, the genome-wide distribution of SNPs is examined to identify outliers. SNPs with \textit{p}-values in the 99th percentile genome-wide are classified as outliers. Then, the frequency of outlier SNPs in analysis windows is calculated. In Yeaman et al (2016), sequence up and downstream of genes were used as analysis windows
+Yeaman et al (2016) proposed a method for combining information across sites in genotype-environment association studies. The top-candidate test, as Yeaman et al (2016)  called it, attempts to identify regions of the genome involved in local adaptation under the assumption that alleles in such regions will tend to generate LD with neighbouring sites so multiple linked markers may exhibit a significant correlation with important environmental variables. First, the genome-wide distribution of SNPs is examined to identify outliers. SNPs with \textit{p}-values in the 99th percentile genome-wide are classified as outliers. Then, the frequency of outlier SNPs in analysis windows is calculated. In Yeaman et al (2016), sequence up and downstream of genes were used as analysis windows
  but since we make use of it in this paper, we provide 
 
 There are philosophical reasons as to why the WZA should be preferred. First, the Top-candidate test assumes that there is a fraction of the genetic markers analysed that are tagging causal variants (i.e. that there are true positives in the dataset). This is undesirable, because there may well be no detectable variation that contributes to local adaptation present, i.e. the study may simply be underpowered. Secondly, the test gives equal weight to all markers. However, alleles at different frequencies possess different levels of information about population history. A final related point is that all SNPs that have exceeded the significance threshold are treated identically. For example, with a significance threshold of 0.01, genomic regions with only a single outlier are treated in the same way whether that outlier has a \textit{p}-value of 0.009 or $10^{-10}$.
@@ -125,18 +131,24 @@ Note that $PVE_g$ does not provide a measure of local adaptation, merely a measu
 
 \subsection{Data Availability}
 
-The simulation configuration files and code to perform the analysis of simulated data and generate the associated plots are available at github/TBooker/GEA. Tree-sequence files for the simulated populations are available at Dryad. 
+The simulation configuration files and code to perform the analysis of simulated data and generate the associated plots are available at github/TBooker/GEA. Tree-sequence files for the simulated populations are available at Dryad and all processed GEA files are available on Dryad. 
 
-
-\begin{figure}
-  \includegraphics[width=\linewidth]{../Plots/environmentGridPlot.png}
-  \caption{Three models of population structure used to simulated varying degrees of spatial autocorrelation in the environment. }
-  \label{fig:boat1}
-\end{figure}
 
 \section{Results}
 
+\begin{figure}
+  \includegraphics[width=\linewidth]{../../Plots/environmentGridPlot.png}
+  \caption{Three models of population structure used to simulated varying degrees of spatial autocorrelation in the environment. A) A highly discretized map of degree-days above 0 (DD0) in South-Western British Columbia, capturing realistic spatial autocorrelation in an environmental variable species may respond to. We refer to the map in A as the BC map. B) A 1-dimensional cline in phenotypic optimum, we refer to this as the cline map. C) A heterogenous distribution of phenotyic optima. The distribution of phenotypic optima in the cline and random maps}
+  
+  \label{fig:boat1}
+\end{figure}
+
 \section{Discussion}
+yo\\
+\\
+\\
+\\
+
 
 
 \section{Acknowledgements}
