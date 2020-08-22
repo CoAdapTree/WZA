@@ -100,16 +100,19 @@ class corLine:
 		self.pos = int(dat[0].split("-")[1])
 
 ## The data in the Correlations file are stored as contig-pos, so I'll parse that out
-
+## Note that this is VERY sensitive to the file structure staying the same
 		self.env = dat[1]
 
 		self.rho = float(dat[2])
 
 		self.pVal = float(dat[3])
 
+		MAF = float(dat[4])
+
+		self.pbar_qbar = MAF * (1 - MAF) 
 
 ## A generator function to spit out the consecutive lines for the contig
-def contigGenerator(correlationFile, envFilter = "MAT"):
+def contigGenerator(correlationFile, envFilter):
 
 	current_contig = ""
 
@@ -163,6 +166,7 @@ def contigSnpTable(snps, contig_dat):
 									"pos":s.pos,
 									"rho":s.rho,
 									"pVal":s.pVal,
+									"pbar_qbar":s.pbar_qbar,
 									"gene":gene_name})
 
 	return pd.DataFrame(data_for_table)	
@@ -199,7 +203,17 @@ def main():
 
 			type = str, 
 
-			help = "The name of the output file")
+			help = "The name of the output file (the environment will be prepended to the file name so be sure to write to this dir!)")
+
+	parser.add_argument("--env", 
+
+			required = False,
+
+			dest = "env",
+
+			type = str, 
+
+			help = "[OPTIONAL] If you want to analyse just a single environment, give it here")
 
 	args = parser.parse_args()
 	
@@ -226,29 +240,50 @@ def main():
 
 								"attribute"])
 
-	all_contigs = []
 
-	for contig,SNPs in contigGenerator(args.correlations):
+## For all environmental variables:
+## MAT MWMT MCMT TD MAP MSP AHM SHM DD_0 DDS NFFD bFFP FFP PAS EMT EXT Eref CMD
 
-		contigDF = contigSnpTable(SNPs, gff[gff["seqname"] == contig])
+	envs =["MAT","MWMT","MCMT","TD",
+			"MAP","MSP","AHM","SHM",
+			"DD_0","DDS","NFFD","bFFP",
+			"FFP","PAS","EMT","EXT","Eref","CMD"]
+	if args.env:
+		if args.env not in envs:
+			print("you did not specify a valid environment. Take a look at your command, bozo")
+			return
 
-		if contigDF.shape == (0,0):
-			continue
+## We're going to analyse each env. separately
+	for env in envs:
+		all_contigs = []
 
-		contigDF["pbar_qbar"] = 0.25
+		print("Analysing:",env)
+		
+		for contig,SNPs in contigGenerator(args.correlations, env):
 
-		position = contigDF.groupby(["gene"])["pos"].mean().to_frame()
+			contigDF = contigSnpTable(SNPs, gff[gff["seqname"] == contig])
 
-		wza = WZA(contigDF, "pVal")
+			if contigDF.shape == (0,0):
+				continue
+			print(contigDF)
+#			contigDF["pbar_qbar"] = 0.25
 
-		TopCan = top_candidate( contigDF, 0.05, "pVal", 0.05, MAF_filter = 0.05 )
+			position = contigDF.groupby(["gene"])["pos"].mean().to_frame()
 
-		result = pd.concat([ position, wza, TopCan] , axis = 1, sort = True ).reset_index()
+			wza = WZA(contigDF, "pVal")
 
-		result["contig"] = contig
+			TopCan = top_candidate( contigDF, 0.05, "pVal", 0.05, MAF_filter = 0.05 )
 
-		all_contigs.append( result )
+			result = pd.concat([ position, wza, TopCan] , axis = 1, sort = True ).reset_index()
 
-	pd.concat(all_contigs).to_csv(args.output,index = False)
+			result["contig"] = contig
+
+			result["env"] = env
+
+			all_contigs.append( result )
+		if len( all_contigs ) == 0: continue 
+		
+		pd.concat(all_contigs).to_csv(env + "_" + args.output,index = False)
+
 
 main()
