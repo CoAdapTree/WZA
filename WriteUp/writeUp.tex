@@ -68,14 +68,22 @@ There are two reasons why tightly linked markers may exhibit similarly strong as
 
 \subsection{Why do we expect linkage disequilibrium under local adaptation?}
 
-Theoretical studies of local adaptation suggest that we should expect regions of the genome subject to spatially varying selection pressure to exhibit elevated linkage disequilibrium relative to the genomic background. There are several possible reasons why this might be the case. First, strong divergent selection can generate LD. For example, Barton and Bengstton (198X) showed that a locus subject to strong spatially varying selection can act as a local barrier to gene flow and generate LD with linked neutral sites. Such theoretical studies have typically only examined the role of alleles with spatially antagonistic effects on fitness. Conditionally neutral alleles, which may contribute to local adaptation, have not received the same theoretical treatment, but if selection acting on such sites were strong it would presumably generate LD in the regions where they arose. Second, there is a selective advantage for alleles that are involved in local adaptation to aggregate in regions of low recombination so favourable combinations of alleles are inherited together (Yeaman papers). For that reasons, we might expect multiple causal alleles in particular genomic regions, for example, in the protein-coding and regulatory regions of genes. In sunflowers, for example, there is evidence that suppressed recombination among alleles involved in local adaptation has arisen via the maintenance of large chromosomal inversions (Owens paper). In either case, we expect that strongly selected loci to exhibit elevated LD relative to the genomic background.
+Theoretical studies of local adaptation suggest that we should expect regions of the genome subject to spatially varying selection pressure to exhibit elevated linkage disequilibrium relative to the genomic background. There are several possible reasons why this might be the case. Firstly, a locus subject to strong spatially varying selection can act as a barrier to gene flow in that paricular region of the genome and generate LD with surrounding sites (Barton and Bengston et al). Such theoretical studies have typically only examined the role of alleles with spatially antagonistic effects on fitness. Conditionally neutral alleles, which conceivably contribute to local adaptation, have not received the same theoretical treatment. However, if selection acting on conditionally selected sites were strong it would presumably generate LD in the regions where they arose. Second, there is a selective advantage for alleles that are involved in local adaptation to aggregate in regions of low recombination so favourable combinations of alleles are inherited together (Yeaman papers). For that reason we might expect multiple causal alleles in particular genomic regions, for example, in the protein-coding and regulatory regions of genes. In sunflowers, for example, there is evidence that suppressed recombination among alleles involved in local adaptation has arisen via large chromosomal inversions (Owens paper). In either case, we expect that strongly selected loci to exhibit elevated LD relative to the genomic background.
 
+In this study, we propose using combining information across tightly linked sites to identify regions of the genome under selection. Typically GEA studies examine patterns of genetic variation across a landscape at many polymorphic sites. Typically single nucleotide polymorphisms (SNPs) are used.
+ 
 \section{Materials and Methods}
 \label{sec:materials:methods}
 
-\subsection{The WZA} 
+\subsection{The Weighted-Z Analysis} 
 
-The weighted-Z test combines \textit{p}-values from multiple independent tests into a single score, where the contribution of each test to the total is given a weight that is proportional to the inverse of the error variance (Whitlock 2004). In this study, we propose using weighted-Z tests to combine information across sites for tightly linked regions of the genome. For genomic region, \textit{k}, which contains \textit{n} polymorphic sites we calculate the following,
+The weighted-Z test combines \textit{p}-values from multiple independent tests into a single score with each test given a weight that is proportional to the inverse of its error variance (Whitlock 2004). 
+
+At a given polymorphic site, we denote the average frequency of the minor allele across populations as $\overline{p}$ ($\overline{q}$ corresponds to the major allele). The product $\overline{p}\overline{q}$ provides an estimate of the variance in allele frequencies among populations, so is appropriate as a weight.  
+
+Here we propose the weighted-Z analysis (hereafter the WZA) as a means to combine information across sites. Each polymorphic site (typically single nucleotide polymorphisms) is used to calculate a 
+In the context of GEA we combine information in 
+For genomic region, \textit{k}, which contains \textit{n} polymorphic sites we calculate the following,
 
 \begin{equation}
 \label{weightedZ}
@@ -119,7 +127,11 @@ where $z_i$ is the phenotype of the $i^{th}$ individual in environment $j$, $\th
 To test the performance of the weighted-Z analysis (WZA), we modelled populations adapting to various environments. Figure \ref{fig:EnvGrid} shows a diagram of each of the populations simulated.
 
 
-\subsection{Proportion of variance explained} 
+\subsection{Covariance of phenotype and environment} 
+
+In our simulations modelling stabilising selection, we used the covariance between phenotypes and environment as a measure of a gene's relevance for local adaptation. We calculated the average phenotypic effect of each gene as follows.
+We then used Cov($PB_g$, $env$)/Cov($PB$, $env$) as a measure of a gene's contribution to local adaptation.
+
 
 In our simulations, phenotypic variance ($\sigma^{2}_{P}$) was generated solely by genotypes, i.e. there were no environmental effects. Local adaptation generates variance in phenotypes between populations ($\sigma^{2}_{PB}$). 
 As described above, the simulations incorporated a stochastic mutation model, so from replicate to replicate the effect size of alleles and their locations in the genome varied. As a result, the genes that contributed to local adaptation varied across simulation replicates. We therefore determined the contribution  each gene made to local adaptation by calculating the proportion of phenotypic variance among populations explained by the SNPs in each gene. For each gene that contributes to phenotypic variation there are $k$ causal SNPs each with a phenotypic effect of $\alpha_k$. We use $\bm{\nu_g}$ to refer to the column vector of phenotypic effects for each of the $k$ causal SNPs in gene $g$. In each population there are $n$ diploid individuals and we have $\bm{M_d}$, an $n \times k$ matrix in which the genotype of each individual at each causal SNP is coded as 0, 1 or 2 corresponding to aa, aA and AA genotypes, respectively. The contribution that each gene makes to the overall phenotype in each population is calculated as $C_{g,d} = \sum \bm{M_{g,d} \nu_{g,d}}$. The variance in $C_{g,d}$ gives us a measure of the phenotypic variance between popuatlions generated by each gene ($\sigma^{2}_{PB,g}$). We then calculate the proportion of variance explained by each gene ($PVE_g$) as $\sigma^{2}_{PB,g} / \sigma^{2}_{PB}$
@@ -129,18 +141,31 @@ PVE_g = \frac{\sigma^{2}_{PB,g}}{\sigma^{2}_{PB}}.
 
 Note that $PVE_g$ does not provide a measure of local adaptation, merely a measure of how much phenotypic variation between populations can be explained by a a particular gene. 
 
+\subsection{Analysis of simulation data}
+
+We added neutral mutations to each simulated tree sequence at a rate of $1\times10^{-8}$ using PySLiM (version). While this gave us a population scaled mutation rate of $4N_ed\mu = 0.00078$, and resulted in an average of 30 SNPs per gene that passed a minor allele frequency filter of 0.05.
+
+For each SNP, we calculated Kendall's $\tau$ and recorded the $p$-value. We chose Kendall's $\tau$ over Spearman's $\rho$ as an uncorrected GEA statistic as it can handle ties in data, 
+
+
 \subsection{Application to data from Lodgepole pine}
 
-We re-analysed a population genomic dataset collected for lodgepole pine distributed across the North West of North America. The data were initially generated and described by Yeaman et al (2016). Initially, the top-candidate test was applied to this data. We calculated $Z_W$ scores for the same genes analysed by Yeaman et al (2016). Data were accessed from the Dryad respository associated with Yeaman et al (2016) (http//
-
-
+We re-analysed a population genomic dataset collected for lodgepole pine distributed across the North West of North America. The data were initially generated and described by Yeaman et al (2016). Initially, the top-candidate test was applied to this data. We calculated $Z_W$ scores for the same genes analysed by Yeaman et al (2016). Data were accessed from the Dryad respository associated with Yeaman et al (2016) (DRYADLINK)
 
 \subsection{Data Availability}
 
-The simulation configuration files and code to perform the analysis of simulated data and generate the associated plots are available at github/TBooker/GEA. Tree-sequence files for the simulated populations are available at Dryad and all processed GEA files are available on Dryad. 
+The simulation configuration files and code to perform the analysis of simulated data and generate the associated plots are available at github/TBooker/GEA. Tree-sequence files for the simulated populations are available at Dryad and all processed GEA files are available on (https://doi.org/10.5061/dryad.0t407). 
 
 
 \section{Results}
+
+\subsection{Analysis of an island model}
+
+To assess the statistical properties of the WZA and the top-candidate test, we first performed GEA analyses on neutrally evolving populations structured according to an island model. While highly unrealistic, analysing this model allowed us to determine the statistical properties of the WZA and the top-candidate test without the need to correct for the confounding effects of population structure. 
+
+The distribution of $Z_W$ scores obtained for 5,000 neutrally evolving genes was very close to the expectation of the standard normal distribution. The mean $Z_W$ was 0.00X and the variance was 1.XXX. Figure \ref{fig:normalIsland}A shows the distribution of $Z_W$ scores obtained when analysing a sample consisting of 50 individuals from 40 demes (2,000 total). 
+
+Imposing selection on the island model resulted in 
 
 \begin{figure}
   \includegraphics[width=\linewidth]{../../Plots/environmentGridPlot.png}
@@ -150,11 +175,8 @@ The simulation configuration files and code to perform the analysis of simulated
 \end{figure}
 
 \section{Discussion}
-yo\\
-\\
-\\
-\\
 
+Genomic regions of low recombination exhibit greater variance in population genetic summary statistics than do more highly recombining ones , complicating statistical inference. We simulated genomes that experience uniform recombination rates, though that is highly unrealistic. We did so for statistical convenience. When analysing real datasets, researchers should be mindful that analysis windows of a constant physical size may 
 
 
 \section{Acknowledgements}

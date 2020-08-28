@@ -51,12 +51,13 @@ def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z"):
 
 ## A function for performing the top-candidate test
 
-def top_candidate( gea, thresh, statistic, prop_hits, MAF_filter = 0.05):
+def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold, MAF_filter = 0.05):
 
 ## gea - the name of the pandas dataFrame with the gea results
 ## thresh - the p_value threshold for determining hits
 ## MAF_filter - the lowest MAF you wil tolerate
-## prop_hits - the average probility of getting a hit
+## prop_hits - the average probility of getting a hit - this should be the quantile threshold
+##top_candidate_threshold - the probability point for calculating the expected number of genes
 
 ## Identifty the hits
 	gea["hits"] = ( -np.log10(gea[statistic]) > thresh).astype(int)
@@ -79,11 +80,21 @@ def top_candidate( gea, thresh, statistic, prop_hits, MAF_filter = 0.05):
 
 ## Init an empty vector for p_values (the top-candidate index)
 	p_vals = []
-	for index, row in TC.iterrows():
-		p_vals.append( scipy.stats.binom_test(row.hits, row.SNPs, prop_hits, alternative = "greater" ) )
 
-## Add the TC p_vals to the genes
+## Init an empty vector for expected hits at the "top-candidate" threshold
+	expectedHits = []
+	for index, row in TC.iterrows():
+		print(row.hits, row.SNPs, top_candidate_threshold )
+		p_vals.append( scipy.stats.binom_test(row.hits, row.SNPs, threshQuant, alternative = "greater" ) )
+		expectedHits.append( scipy.stats.binom.ppf( top_candidate_threshold , row.SNPs, threshQuant ) )
+
+
+## Add the TC p_vals to the genes DF
 	TC["top_candidate_p"] = p_vals
+
+## Add the TC expected number of hits to the genes DF
+	TC["expected_outliers"] = expectedHits
+
 
 ## Return the resulting dataFrame
 	return(TC)
@@ -170,6 +181,22 @@ def contigSnpTable(snps, contig_dat):
 									"gene":gene_name})
 
 	return pd.DataFrame(data_for_table)	
+	
+	
+def correlationThreshold( corData, targetEnv, percentile_threshold = 99.9):
+## Make an empty container to dump the pVals into
+	pValues = []
+	with open( corData ) as cor:
+		for c in cor:
+			if c.startswith("snp"):continue
+			currentLine = corLine(c)
+			if currentLine.env != targetEnv: continue
+			else:
+				pValues.append(currentLine.pVal)
+				
+	print( 1 -np.percentile( 1 - np.array(pValues), percentile_threshold ) )
+
+## Ignore the header
 
 def main():
 
@@ -246,25 +273,33 @@ def main():
 
 	envs =["MAT","MWMT","MCMT","TD",
 			"MAP","MSP","AHM","SHM",
-			"DD_0","DDS","NFFD","bFFP",
+			"DD_0","DD5","NFFD","bFFP",
 			"FFP","PAS","EMT","EXT","Eref","CMD"]
+## If you specify just a single environment (which is recommended for parallelisation)
 	if args.env:
+## Make sure that the environment specified is actually valid
 		if args.env not in envs:
 			print("you did not specify a valid environment. Take a look at your command, bozo")
 			return
+		envs = [args.env]
 
 ## We're going to analyse each env. separately
 	for env in envs:
 		all_contigs = []
 
+## Now let's calculate the outlier threshold (for the TC test) from the data - Make sure it's a percentile!
+		threshold_99th = correlationThreshold( args.correlations, env, percentile_threshold = 99)
+		
 		print("Analysing:",env)
 		
+## Iterate over contigs spat out by the 
 		for contig,SNPs in contigGenerator(args.correlations, env):
 
 			contigDF = contigSnpTable(SNPs, gff[gff["seqname"] == contig])
 
 			if contigDF.shape == (0,0):
 				continue
+
 			print(contigDF)
 #			contigDF["pbar_qbar"] = 0.25
 
@@ -272,7 +307,7 @@ def main():
 
 			wza = WZA(contigDF, "pVal")
 
-			TopCan = top_candidate( contigDF, 0.05, "pVal", 0.05, MAF_filter = 0.05 )
+			TopCan = top_candidate( contigDF, threshold_99th, 0.01, "pVal", 0.9999, MAF_filter = 0.05 )
 
 			result = pd.concat([ position, wza, TopCan] , axis = 1, sort = True ).reset_index()
 
@@ -281,9 +316,11 @@ def main():
 			result["env"] = env
 
 			all_contigs.append( result )
+			
 		if len( all_contigs ) == 0: continue 
 		
-		pd.concat(all_contigs).to_csv(env + "_" + args.output,index = False)
+		outputDF = pd.concat(all_contigs)
+		print( outputDF.to_csv(env + "_" + args.output,index = False) )
 
 
 main()
