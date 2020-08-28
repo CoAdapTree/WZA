@@ -58,9 +58,9 @@ def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold,
 ## MAF_filter - the lowest MAF you wil tolerate
 ## prop_hits - the average probility of getting a hit - this should be the quantile threshold
 ##top_candidate_threshold - the probability point for calculating the expected number of genes
-
 ## Identifty the hits
-	gea["hits"] = ( -np.log10(gea[statistic]) > thresh).astype(int)
+	gea["hits"] = ( -np.log10(gea[statistic]) > -np.log10(thresh)).astype(int)
+
 
 ## Apply the MAF filter
 #	gea_filt = gea[ gea["maf"] > MAF_filter ]
@@ -84,7 +84,7 @@ def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold,
 ## Init an empty vector for expected hits at the "top-candidate" threshold
 	expectedHits = []
 	for index, row in TC.iterrows():
-		print(row.hits, row.SNPs, top_candidate_threshold )
+#		print(row.hits, row.SNPs, top_candidate_threshold )
 		p_vals.append( scipy.stats.binom_test(row.hits, row.SNPs, threshQuant, alternative = "greater" ) )
 		expectedHits.append( scipy.stats.binom.ppf( top_candidate_threshold , row.SNPs, threshQuant ) )
 
@@ -194,9 +194,8 @@ def correlationThreshold( corData, targetEnv, percentile_threshold = 99.9):
 			else:
 				pValues.append(currentLine.pVal)
 				
-	print( 1 -np.percentile( 1 - np.array(pValues), percentile_threshold ) )
+	return( 1 -np.percentile( 1 - np.array(pValues), percentile_threshold ) )
 
-## Ignore the header
 
 def main():
 
@@ -214,13 +213,13 @@ def main():
 
 			help = "The file containing the correlations")
 
-	parser.add_argument("--GFF","-g", 
+	parser.add_argument("--annotations","-a", 
 
 			required = True,
 
-			dest = "GFF", 
+			dest = "annotations", 
 
-			help = "The GFF file (gene annotations)?")
+			help = "The file of annotations. The script asssumes GFF as default, set the '--bed' flag if using that format")
 
 	parser.add_argument("--output", 
 
@@ -242,10 +241,35 @@ def main():
 
 			help = "[OPTIONAL] If you want to analyse just a single environment, give it here")
 
+	parser.add_argument("--bed", 
+
+			required = False,
+
+			dest = "bed",
+
+			action = "store_true", 
+
+			help = "[OPTIONAL] Give this flag if the analysis files are in BED format. Otherwise the script assumes GFF format")
+
 	args = parser.parse_args()
 	
+	if args.bed:
+		annotations = pd.read_csv(args.annotations , 
+
+					sep = "\t",
+
+						names = ["seqname",
+
+								"start",
+
+								"end",
+
+								"attribute"])
+		annotations["start"] +=1
+
+	else:
 ## GFF header from ENSEMBL webpage
-	gff = pd.read_csv(args.GFF , 
+		annotations = pd.read_csv(args.GFF , 
 
 					sep = "\t",
 
@@ -266,7 +290,6 @@ def main():
 								"frame",
 
 								"attribute"])
-
 
 ## For all environmental variables:
 ## MAT MWMT MCMT TD MAP MSP AHM SHM DD_0 DDS NFFD bFFP FFP PAS EMT EXT Eref CMD
@@ -289,26 +312,32 @@ def main():
 
 ## Now let's calculate the outlier threshold (for the TC test) from the data - Make sure it's a percentile!
 		threshold_99th = correlationThreshold( args.correlations, env, percentile_threshold = 99)
-		
+		print(threshold_99th) 
 		print("Analysing:",env)
 		
 ## Iterate over contigs spat out by the 
 		for contig,SNPs in contigGenerator(args.correlations, env):
 
-			contigDF = contigSnpTable(SNPs, gff[gff["seqname"] == contig])
+## Grab all the genes present on this contig
+			contigDF = contigSnpTable(SNPs, annotations[annotations["seqname"] == contig])
 
+## If there are no annotations on the current contig, move to the next
 			if contigDF.shape == (0,0):
 				continue
 
-			print(contigDF)
-#			contigDF["pbar_qbar"] = 0.25
+#			print(contigDF)
+
+## Get the average position of each annotation - not used for the analysis, just for downstream plotting
 
 			position = contigDF.groupby(["gene"])["pos"].mean().to_frame()
 
+## Perform the WZA on the annotations in the contig
 			wza = WZA(contigDF, "pVal")
 
+## Perform the top-candidate for the annotations in the contig
 			TopCan = top_candidate( contigDF, threshold_99th, 0.01, "pVal", 0.9999, MAF_filter = 0.05 )
 
+## Combine the results
 			result = pd.concat([ position, wza, TopCan] , axis = 1, sort = True ).reset_index()
 
 			result["contig"] = contig
@@ -319,8 +348,11 @@ def main():
 			
 		if len( all_contigs ) == 0: continue 
 		
+## Combine all contig-specific dataframes into a single big one
 		outputDF = pd.concat(all_contigs)
-		print( outputDF.to_csv(env + "_" + args.output,index = False) )
+		
+## Write the dataframe to an output file
+		outputDF.to_csv(env + "_" + args.output,index = False)
 
 
 main()
