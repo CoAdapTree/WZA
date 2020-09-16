@@ -2,103 +2,9 @@ import pandas as pd
 import scipy.stats
 import numpy as np
 import sys, glob, argparse
+from GEA_functions import *
 
 ## Here's a script to calculate the Weighted Z score (and the top-candidate test from the CoAdapTree data structures)
-
-
-def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z"):
-## gea - the name of the pandas dataFrame with the gea results
-## statistic - the name of the column with your p-values
-## MAF_filter - the lowest MAF you wil tolerate
-## varName - the column name for the weigted Z results
-
-## Very small p-values throw Infinities when converted to z_scores, so I convert them to small numbers (i.e. 1e-15)
-
-	gea[statistic] = gea[statistic].clip(lower = 1e-15 )
-
-	gea[statistic] = gea[statistic].replace(1 , 1-1e-3)
-
-## convert the p-values into 1-sided Z scores (hence the 1 - p-values)
-	gea["z"] = scipy.stats.norm.ppf(1 - gea[statistic])
-
-## Apply the MAF filter
-#	gea_filt = gea[ gea["maf"] > MAF_filter ].copy()
-
-	gea_filt = gea.copy()
-
-## Calculate the numerator and the denominator for the WZA
-
-	gea_filt[varName+"weiZ_num"] = gea_filt["pbar_qbar"] * gea_filt["z"]
-
-	gea_filt[varName+"weiZ_den"] =  gea_filt["pbar_qbar"]**2 	
-
-	numerator = gea_filt.groupby(["gene"])[varName+"weiZ_num"].sum().to_frame()
-
-	denominator = np.sqrt(gea_filt.groupby(["gene"])[varName+"weiZ_den"].sum()).to_frame()
-
-## We've calculated the num. and the den., let's make a dataframe that has both 
-	weiZ  = pd.concat([numerator,denominator], axis = 1, sort = False)
-
-## Actually calculate the Z scores for each gene
-	weiZ[varName] = weiZ[varName+"weiZ_num"] / weiZ[varName+"weiZ_den"]
-
-## One might be interested in calculating a p_value from the Z-scores (though this only works if the data are normal, which they won't be if there's populations structure).
-	weiZ[varName+"_hits"] = (weiZ[varName] > scipy.stats.norm.ppf(1 - 0.05/50)).astype(int)
-
-## Return the final dataframe
-	return weiZ
-
-
-## A function for performing the top-candidate test
-
-def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold, MAF_filter = 0.05):
-
-## gea - the name of the pandas dataFrame with the gea results
-## thresh - the p_value threshold for determining hits
-## MAF_filter - the lowest MAF you wil tolerate
-## prop_hits - the average probility of getting a hit - this should be the quantile threshold
-##top_candidate_threshold - the probability point for calculating the expected number of genes
-## Identifty the hits
-	gea["hits"] = ( -np.log10(gea[statistic]) > -np.log10(thresh)).astype(int)
-
-
-## Apply the MAF filter
-#	gea_filt = gea[ gea["maf"] > MAF_filter ]
-	gea_filt = gea.copy()
-
-## Count the hits per gene
-	num_hits = gea_filt.groupby(["gene"])["hits"].sum().to_frame()
-
-## Count the SNPs per gene
-	num_SNPs = gea_filt.groupby(["gene"])["hits"].count().to_frame()
-
-## Make a single DF with the hits and the SNPs
-	TC  = pd.concat([num_hits, num_SNPs], axis = 1, sort = False) 
-
-## Name the cols
-	TC.columns = ["hits", "SNPs"]
-
-## Init an empty vector for p_values (the top-candidate index)
-	p_vals = []
-
-## Init an empty vector for expected hits at the "top-candidate" threshold
-	expectedHits = []
-	for index, row in TC.iterrows():
-#		print(row.hits, row.SNPs, top_candidate_threshold )
-		p_vals.append( scipy.stats.binom_test(row.hits, row.SNPs, threshQuant, alternative = "greater" ) )
-		expectedHits.append( scipy.stats.binom.ppf( top_candidate_threshold , row.SNPs, threshQuant ) )
-
-
-## Add the TC p_vals to the genes DF
-	TC["top_candidate_p"] = p_vals
-
-## Add the TC expected number of hits to the genes DF
-	TC["expected_outliers"] = expectedHits
-
-
-## Return the resulting dataFrame
-	return(TC)
-
 
 class corLine:
 
@@ -163,12 +69,18 @@ def contigGenerator(correlationFile, envFilter):
 def contigSnpTable(snps, contig_dat):
 
 	data_for_table = []
+
 	for s in snps:
 
 		gene_bool = (s.pos>=contig_dat.start)&(s.pos<=contig_dat.end)
+
 		if sum(gene_bool) == 0:continue
 
 		gene_name = ":".join(list(contig_dat.attribute[gene_bool]))
+
+		gene_start = list(contig_dat.start[gene_bool] )[0]
+
+		gene_end = list( contig_dat.end[gene_bool] )[0]
 
 		if sum(gene_bool) > 1:
 			print("more than one gene overlapping with SNP:", s.contig, s.pos)
@@ -178,7 +90,9 @@ def contigSnpTable(snps, contig_dat):
 									"rho":s.rho,
 									"pVal":s.pVal,
 									"pbar_qbar":s.pbar_qbar,
-									"gene":gene_name})
+									"gene":gene_name,
+									"gene_start":gene_start,
+									"gene_end":gene_end})
 
 	return pd.DataFrame(data_for_table)	
 	
@@ -193,8 +107,10 @@ def correlationThreshold( corData, targetEnv, percentile_threshold = 99.9):
 			if currentLine.env != targetEnv: continue
 			else:
 				pValues.append(currentLine.pVal)
-				
-	return( 1 -np.percentile( 1 - np.array(pValues), percentile_threshold ) )
+	if len(pValues) == 0:
+		return None
+	else:
+		return( 1 -np.percentile( 1 - np.array(pValues), percentile_threshold ) )
 
 
 def main():
@@ -265,11 +181,12 @@ def main():
 								"end",
 
 								"attribute"])
+## Add 1 to the positions to make correct for 0-based BedTools
 		annotations["start"] +=1
 
 	else:
 ## GFF header from ENSEMBL webpage
-		annotations = pd.read_csv(args.GFF , 
+		annotations = pd.read_csv(args.annotations , 
 
 					sep = "\t",
 
@@ -312,24 +229,30 @@ def main():
 
 ## Now let's calculate the outlier threshold (for the TC test) from the data - Make sure it's a percentile!
 		threshold_99th = correlationThreshold( args.correlations, env, percentile_threshold = 99)
-		print(threshold_99th) 
+		if threshold_99th == None:
+			print("Something went wrong when identifying the outlier threshold")
+			return
+		print("99th percentile:",threshold_99th) 
+
+
 		print("Analysing:",env)
 		
 ## Iterate over contigs spat out by the 
 		for contig,SNPs in contigGenerator(args.correlations, env):
-
 ## Grab all the genes present on this contig
 			contigDF = contigSnpTable(SNPs, annotations[annotations["seqname"] == contig])
-
+#			print(contigDF)
 ## If there are no annotations on the current contig, move to the next
 			if contigDF.shape == (0,0):
 				continue
 
-#			print(contigDF)
-
 ## Get the average position of each annotation - not used for the analysis, just for downstream plotting
 
 			position = contigDF.groupby(["gene"])["pos"].mean().to_frame()
+
+			anno_start = contigDF.groupby(["gene"])["gene_start"].mean().to_frame()
+			
+			anno_end = contigDF.groupby(["gene"])["gene_end"].mean().to_frame()
 
 ## Perform the WZA on the annotations in the contig
 			wza = WZA(contigDF, "pVal")
@@ -338,7 +261,7 @@ def main():
 			TopCan = top_candidate( contigDF, threshold_99th, 0.01, "pVal", 0.9999, MAF_filter = 0.05 )
 
 ## Combine the results
-			result = pd.concat([ position, wza, TopCan] , axis = 1, sort = True ).reset_index()
+			result = pd.concat([ position, wza, TopCan, anno_start, anno_end] , axis = 1, sort = True ).reset_index()
 
 			result["contig"] = contig
 
