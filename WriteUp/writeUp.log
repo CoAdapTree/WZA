@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.12)  31 AUG 2020 10:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.12)  21 SEP 2020 15:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1291,39 +1291,51 @@ Package microtype Info: Loading configuration file microtype.cfg.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/microtype/microtype.cfg
 File: microtype.cfg 2013/05/23 v2.5a microtype main configuration file (RS)
 ))
+(/usr/local/texlive/2014/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box48
+\UL@hyphenbox=\box49
+\UL@skip=\skip75
+\UL@hook=\toks49
+\UL@height=\dimen258
+\UL@pe=\count199
+\UL@pixel=\dimen259
+\ULC@box=\box50
+Package: ulem 2012/05/18
+\ULdepth=\dimen260
+)
 (./styles/inv.sty
 Package: styles/inv 2015/03/31 v1.2 GSA Genetics Journal Investigation style
 ) (./writeUp.aux)
 \openout1 = `writeUp.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 37.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 37.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 38.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 38.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Try loading font information for T1+ppl on input line 37.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Try loading font information for T1+ppl on input line 38.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
-\AtBeginShipoutBox=\box48
-Package hyperref Info: Link coloring ON on input line 37.
+\AtBeginShipoutBox=\box51
+Package hyperref Info: Link coloring ON on input line 38.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1331,11 +1343,11 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count199
+\c@section@level=\count200
 )
-LaTeX Info: Redefining \ref on input line 37.
-LaTeX Info: Redefining \pageref on input line 37.
-LaTeX Info: Redefining \nameref on input line 37.
+LaTeX Info: Redefining \ref on input line 38.
+LaTeX Info: Redefining \pageref on input line 38.
+LaTeX Info: Redefining \nameref on input line 38.
 
 (./writeUp.out) (./writeUp.out)
 \@outlinefile=\write4
@@ -1344,17 +1356,17 @@ LaTeX Info: Redefining \nameref on input line 37.
 
 (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count200
-\scratchdimen=\dimen258
-\scratchbox=\box49
-\nofMPsegments=\count201
-\nofMParguments=\count202
-\everyMPshowfont=\toks49
-\MPscratchCnt=\count203
-\MPscratchDim=\dimen259
-\MPnumerator=\count204
-\makeMPintoPDFobject=\count205
-\everyMPtoPDFconversion=\toks50
+\scratchcounter=\count201
+\scratchdimen=\dimen261
+\scratchbox=\box52
+\nofMPsegments=\count202
+\nofMParguments=\count203
+\everyMPshowfont=\toks50
+\MPscratchCnt=\count204
+\MPscratchDim=\dimen262
+\MPnumerator=\count205
+\makeMPintoPDFobject=\count206
+\everyMPtoPDFconversion=\toks51
 ) (/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -1407,7 +1419,7 @@ ABD: EveryShipout initializing macros
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-Package caption Info: We need package `ragged2e' on input line 37.
+Package caption Info: We need package `ragged2e' on input line 38.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/ms/ragged2e.sty
 Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
 
@@ -1417,20 +1429,20 @@ Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
 ABD: EverySelectfont initializing macros
 LaTeX Info: Redefining \selectfont on input line 126.
 )
-\CenteringLeftskip=\skip75
-\RaggedLeftLeftskip=\skip76
-\RaggedRightLeftskip=\skip77
-\CenteringRightskip=\skip78
-\RaggedLeftRightskip=\skip79
-\RaggedRightRightskip=\skip80
-\CenteringParfillskip=\skip81
-\RaggedLeftParfillskip=\skip82
-\RaggedRightParfillskip=\skip83
-\JustifyingParfillskip=\skip84
-\CenteringParindent=\skip85
-\RaggedLeftParindent=\skip86
-\RaggedRightParindent=\skip87
-\JustifyingParindent=\skip88
+\CenteringLeftskip=\skip76
+\RaggedLeftLeftskip=\skip77
+\RaggedRightLeftskip=\skip78
+\CenteringRightskip=\skip79
+\RaggedLeftRightskip=\skip80
+\RaggedRightRightskip=\skip81
+\CenteringParfillskip=\skip82
+\RaggedLeftParfillskip=\skip83
+\RaggedRightParfillskip=\skip84
+\JustifyingParfillskip=\skip85
+\CenteringParindent=\skip86
+\RaggedLeftParindent=\skip87
+\RaggedRightParindent=\skip88
+\JustifyingParindent=\skip89
 )
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             http://www.ctan.org/tex-archive/ 
@@ -1438,8 +1450,8 @@ Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             or
 (lastpage)             http://www.ctan.org/tex-archive/ 
 (lastpage)             install/macros/latex/contrib/pageslts.tds.zip
-(lastpage)             ! on input line 37.
-LaTeX Info: Redefining \microtypecontext on input line 37.
+(lastpage)             ! on input line 38.
+LaTeX Info: Redefining \microtypecontext on input line 38.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1453,73 +1465,73 @@ Package microtype Info: No adjustment of character kerning.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
-LaTeX Font Info:    Try loading font information for T1+phv on input line 39.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 40.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 10.40245pt on input line 39.
+(Font)              scaled to size 10.40245pt on input line 40.
 Package microtype Info: Loading generic settings for font family
 (microtype)             `phv' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 39.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 10.40245pt on input line 39.
+(Font)              scaled to size 10.40245pt on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <21> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 39.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 19.94994pt on input line 39.
+(Font)              scaled to size 19.94994pt on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 39.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 8.54997pt on input line 39.
-LaTeX Font Info:    Try loading font information for OT1+ppl on input line 39.
+(Font)              scaled to size 8.54997pt on input line 40.
+LaTeX Font Info:    Try loading font information for OT1+ppl on input line 40.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 39.
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 40.
 
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 39.
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 40.
 
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 39.
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 40.
 
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 39.
+(Font)              scaled to size 9.37807pt on input line 40.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 39.
+(Font)              scaled to size 7.29405pt on input line 40.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 39.
+(Font)              scaled to size 5.21004pt on input line 40.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 39.
+(Font)              scaled to size 9.37807pt on input line 40.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 39.
+(Font)              scaled to size 7.29405pt on input line 40.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 39.
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 39.
+(Font)              scaled to size 5.21004pt on input line 40.
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 40.
 
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1zplm.fd
@@ -1530,138 +1542,147 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <7> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 39.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 6.64998pt on input line 39.
+(Font)              scaled to size 6.64998pt on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 39.
+(Font)              scaled to size 8.54997pt on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 39.
+(Font)              scaled to size 7.59998pt on input line 40.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 39.
+(Font)              scaled to size 8.33606pt on input line 40.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 39.
+(Font)              scaled to size 6.25204pt on input line 40.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 39.
+(Font)              scaled to size 8.33606pt on input line 40.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 39.
+(Font)              scaled to size 6.25204pt on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 5.69998pt on input line 39.
+(Font)              scaled to size 5.69998pt on input line 40.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 39--39
+Overfull \hbox (12.0pt too wide) in paragraph at lines 40--40
 [][][] 
  []
 
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 39.
+(Font)              scaled to size 9.49997pt on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 39.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 39.
+(Font)              scaled to size 9.49997pt on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 39.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 9.49997pt on input line 39.
+(Font)              scaled to size 9.49997pt on input line 40.
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--39
+Underfull \hbox (badness 10000) in paragraph at lines 40--40
 
  []
 
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 11.40997pt on input line 39.
+(Font)              scaled to size 11.40997pt on input line 40.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 11.40997pt on input line 39.
+(Font)              scaled to size 11.40997pt on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 39.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 40.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 7.59998pt on input line 39.
+(Font)              scaled to size 7.59998pt on input line 40.
 
-Overfull \hbox (40.45268pt too wide) in paragraph at lines 41--41
+Overfull \hbox (40.45268pt too wide) in paragraph at lines 42--42
 [][] 
  []
 
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 6.64998pt on input line 42.
+(Font)              scaled to size 6.64998pt on input line 43.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 4.74998pt on input line 42.
+(Font)              scaled to size 4.74998pt on input line 43.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 48.
+(Font)              scaled to size 11.39996pt on input line 49.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 48.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 49.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 48.
+(Font)              scaled to size 11.39996pt on input line 49.
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 62.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 63.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 62.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 63.
 LaTeX Font Info:    Font shape `T1/phv/b/sl' will be
-(Font)              scaled to size 10.40245pt on input line 62.
+(Font)              scaled to size 10.40245pt on input line 63.
 [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2]
+
+Package caption Warning: \label without proper \caption on input line 124.
+See the caption package documentation for explanation.
+
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 128.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 109.
+
+LaTeX Warning: Reference `SimulationParameters' on page 2 undefined on input li
+ne 109.
+
+[2]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 122.
 
 
-LaTeX Warning: Reference `fig:EnvGrid' on page 3 undefined on input line 128.
+Package caption Warning: \label without proper \caption on input line 124.
+See the caption package documentation for explanation.
 
-[3]pdfTeX warning (ext4): destination with the same identifier (name{equation.0
-.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.139 \begin{equation}
-                      pdfTeX warning (ext4): destination with the same identifi
-er (name{equation.0.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.139 \begin{equation}
-                      pdfTeX warning (ext4): destination with the same identifi
-er (name{equation.0.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.139 \begin{equation}
-                      pdfTeX warning (ext4): destination with the same identifi
-er (name{equation.0.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.139 \begin{equation}
-                      
 
-LaTeX Warning: Reference `fig:normalIsland' on page 4 undefined on input line 1
-68.
+LaTeX Warning: Reference `SimulationParameters' on page 3 undefined on input li
+ne 139.
 
-<../../Plots/environmentGridPlot.png, id=38, 5420.25pt x 1806.75pt>
+[3]
+
+LaTeX Warning: Reference `fig:EnvGrid' on page 4 undefined on input line 162.
+
+[4pdfTeX warning (ext4): destination with the same identifier (name{equation.0.
+2}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.183 
+      ]
+
+LaTeX Warning: Reference `fig:normalIsland' on page 5 undefined on input line 2
+02.
+
+<../../Plots/environmentGridPlot.png, id=45, 5420.25pt x 1806.75pt>
 File: ../../Plots/environmentGridPlot.png Graphic file (type png)
 
 <use ../../Plots/environmentGridPlot.png>
 Package pdftex.def Info: ../../Plots/environmentGridPlot.png used on input line
- 173.
+ 207.
 (pdftex.def)             Requested size: 524.295pt x 174.7583pt.
  
 AED: lastpage setting LastPage
-[4] [5 <../../Plots/environmentGridPlot.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 192.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 192.
+[5] [6 <../../Plots/environmentGridPlot.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 226.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 226.
  (./writeUp.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 192.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 192.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 226.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 226.
 Package rerunfilecheck Info: File `writeUp.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 192.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 226.
  ) 
 Here is how much of TeX's memory you used:
- 24008 strings out of 493117
- 422318 string characters out of 6135432
- 539338 words of memory out of 5000000
- 26746 multiletter control sequences out of 15000+600000
- 95595 words of font info for 242 fonts, out of 8000000 for 9000
+ 24115 strings out of 493117
+ 423442 string characters out of 6135432
+ 540513 words of memory out of 5000000
+ 26833 multiletter control sequences out of 15000+600000
+ 96397 words of font info for 252 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,12n,56p,1548b,370s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,11n,56p,1548b,370s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -1679,10 +1700,10 @@ helvetic/uhvro8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palati
 no/uplb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplb
 i8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on writeUp.pdf (5 pages, 402764 bytes).
+Output written on writeUp.pdf (6 pages, 411432 bytes).
 PDF statistics:
- 99 PDF objects out of 1000 (max. 8388607)
- 75 compressed objects within 1 object stream
- 10 named destinations out of 1000 (max. 500000)
+ 106 PDF objects out of 1000 (max. 8388607)
+ 81 compressed objects within 1 object stream
+ 12 named destinations out of 1000 (max. 500000)
  49170 words of extra memory for PDF output out of 51595 (max. 10000000)
 

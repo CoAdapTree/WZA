@@ -1,6 +1,7 @@
 \documentclass[11pt,twoside,lineno]{GSA_format}
 % Use the documentclass option 'lineno' to view line numbers
-
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
 \articletype{inv} % article type
 % {inv} Investigation 
 % {gs} Genomic Selection
@@ -76,7 +77,7 @@ In this study, we propose using combining information across tightly linked site
 \section{Materials and Methods}
 \label{sec:materials:methods}
 
-\subsection{The Weighted-Z Analysis} 
+\subsection{\underline{The Weighted-Z Analysis}} 
 
 The weighted-Z test combines \textit{p}-values from multiple independent tests into a single score with each test given a weight that is proportional to the inverse of its error variance (Whitlock 2004). 
 
@@ -94,15 +95,48 @@ where $\overline{p_i}$ and $\overline{q_i}$ are the average allele frequencies a
 
 
 
-\subsection{The top-candidate test} 
+\subsection{\underline{The top-candidate test}} 
 
 Yeaman et al (2016) proposed a method for combining information across sites in genotype-environment association studies. The top-candidate test, as Yeaman et al (2016)  called it, attempts to identify regions of the genome involved in local adaptation under the assumption that alleles in such regions will tend to generate LD with neighbouring sites so multiple linked markers may exhibit a significant correlation with important environmental variables. First, the genome-wide distribution of SNPs is examined to identify outliers. SNPs with \textit{p}-values in the 99th percentile genome-wide are classified as outliers. Then, the frequency of outlier SNPs in analysis windows is calculated. In Yeaman et al (2016), sequence up and downstream of genes were used as analysis windows
  but since we make use of it in this paper, we provide 
 
 There are philosophical reasons as to why the WZA should be preferred. First, the Top-candidate test assumes that there is a fraction of the genetic markers analysed that are tagging causal variants (i.e. that there are true positives in the dataset). This is undesirable, because there may well be no detectable variation that contributes to local adaptation present, i.e. the study may simply be underpowered. Secondly, the test gives equal weight to all markers. However, alleles at different frequencies possess different levels of information about population history. A final related point is that all SNPs that have exceeded the significance threshold are treated identically. For example, with a significance threshold of 0.01, genomic regions with only a single outlier are treated in the same way whether that outlier has a \textit{p}-value of 0.009 or $10^{-10}$.
 
-\subsection{Simulating local adaptation} 
+\subsection{\underline{Simulating local adaptation}} 
 
+\subsubsection{Parametrising Simulations} \\
+
+Genotype-environment association studies are often performed on large spatially extended populations. However, it is computationally infeasible to model selection and linkage in  a large chromosome in such a populations, so we scaled population genetic parameters to tractably model large populations. Consider a hypothetical metapopulation of 1 million individuals distributed evenly among 196 demes. Table \ref{SimulationParameters} shows the parameters of the hypothetical organism. In this section, we outline and justify the approach we used to scale relevant population genetic parameters in our simulations of local adaptation. 
+
+\subsubsection{Recombination rates} \\
+
+In panmictic populations, linkage disequilibrium can be predicted by the scaled recombination parameter $\rho = 4N_er$, where \textit{r} is the recombination rate per base-pair and $N_e$ is the effective population size. In structured populations, LD is elevated above the expectation for a panmictic population and can be described by the effective size of the local population (or deme), the migration rate and the recombination rate (McVean paper). Assuming a recombination rate of 1 cM/Mbp, the hypothetical organism would have $\rho = 0.0002$. 
+To achieve levels of LD-decay in our simulations that are similar to those expected in real organisms, we chose a recombination rate (\textit{r}) that 
+
+\subsubsection{Selection coefficients} \\ 
+
+\subsubsection{Migration rate} \\
+
+\subsubsection{Mutation rate} 
+
+\begin{table}[]
+\label{SimulationParameters}
+\caption{Population genetic parameters of a hypothetical organism, and how they are scaled in the simulations. The meta=population inhabits a $14\times14$ 2-dimensional stepping stone. Parameters are shown for a population with 10 loci subject to directional selection.}
+\begin{tabular}{lcccl}
+\cline{1-4}
+\textbf{Parameter} & \textbf{Biological value} & \textbf{Scaled Parameter}        & \textbf{Unscaled (simulation)} \\ \cline{1-4}
+Global population size ($N_e$)                 & $10^6$                                      & -                           & 19,600                                              &           \\
+Number of demes ($d$)                  & 196                                      & -                           & 196                                                &           \\
+Local population size ($N_d$)                  & 5,100                                      & -                           & 100                                                &           \\
+Recombination rate (\textit{r})                        & $10^{-8}$                                      & $2.04 \times 10^{-4}$ & $5.10 \times 10^{-7}$                                           &           \\
+Selection coefficient (\textit{$s_{Max}$})                        & 0.005                                         & 25.5 & 0.255                                           &           \\
+Migration rate (\textit{m})                        & $9.80\times 10^{-4}$                                      & 5        & 0.05                                               &           \\
+Functional mutation rate (\textit{$\mu_\alpha$})                        & $2\times 10^{-10}$                                      & 0.0008        & $10^{-8}$ &           \\ \cline{1-4}
+\end{tabular}
+\end{table}
+\subsubsection{Chromosomal architecture}
+
+\ref{SimulationParameters}
 Simulations were performed in SLiM v3.4 (Messer and Haller). 
 We simulated genomes with four chromosomes, modelled using \textit{c} = 0.5 breakpoints. 
 Local adaptation can act as a barrier to gene-flow, individuals that migrate from locations where they are well adapted into locations where they are disfavoured may not survive to propagate, so even freely recombining regions of the genome are linked to a degree and will influence evolution in regions of the genome that are freely recombining. To model local adaptation in unlinked regions of the genome, we modelled three cartoon chromosomes. The cartoon chromosomes were short sequences, 1,000bp long, that had a genetic map and net mutation rate (\textit{$U_a$}) that was the as the focal chromosome. 
@@ -183,7 +217,7 @@ Genomic regions of low recombination exhibit greater variance in population gene
 
 \section{Acknowledgements}
 
-Thanks to Tongli Wang for help with BC climate data and to Simon Kapitza for help with wrangling raster files. 
+Thanks to Pooja Singh for discussions, to Tongli Wang for help with BC climate data and to Simon Kapitza for help with wrangling raster files. 
 
 
 
