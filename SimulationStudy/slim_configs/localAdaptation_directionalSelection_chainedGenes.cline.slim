@@ -19,7 +19,6 @@ initialize() {
 // Keep track of the tree sequence for the population
 	initializeTreeSeq();
 
-
 	initializeMutationRate(1e-7);
 	
 // m2 mutation type: QTL-type
@@ -31,12 +30,13 @@ initialize() {
 	geneNumber = 1001; // This is actually 1+ the gene number
 
 // Initialise a number of QTL equal to the gene number across the genome, slap a single selected base in the middle 
-
 	for (i in seq( 1, geneNumber -1 , asInteger(geneNumber/10))){
-		initializeGenomicElement(g1, ((i-1)*10000+4998), ((i-1)*10000+4998));
+//		initializeGenomicElement(g1, ((i-1)*10000+4998), ((i-1)*10000+4998));
+		initializeGenomicElement(g1, ((i-1)*500+249), ((i-1)*500+249));
 		}
 
-	r = 1e-7;
+//	r = 1e-7;
+	r = 1e-7*20;
 	
 	r_inter = 0.005;
 	
@@ -46,13 +46,21 @@ initialize() {
 	
 	recBreaks = integer((geneNumber *2) -1);
 	recBreaks[0] = 1;
-	
+
 	for (ind in seq(2,geneNumber)){
+		if ( ind%asInteger(geneNumber/5) == 0 ) {
+			r_inter = 0.5;
+			}
+		else {
+			r_inter =0.005;
+			} 
 		recRates[(ind - 1)*2 - 1] = r;
 		recRates[(ind - 1)*2  ] = r_inter;
-		gene_span = (ind-1)*10000 -1;
-		gene_end = (ind-1)*10000 ;
-		//	cat(gene_span + '\n');
+//		gene_span = (ind-1)*(500) -1;
+//		gene_end = (ind-1)*(500) ;
+		gene_span = (ind-1)*(10000) -1;
+		gene_end = (ind-1)*(10000) ;
+			cat(gene_span + '\n');
 		recBreaks[(ind-1)*2 - 1] = gene_span;
 		recBreaks[(ind-1)*2 ] = gene_end;
 	}
@@ -64,7 +72,7 @@ initialize() {
 1 late() {
 	optima = readFile(optimaFile);	
 	subpopCount = length(optima);
-//	subpopCount = 100;
+	subpopCount = 20;
 
 	tempID = "p999";
 	sim.addSubpop(tempID, subpopCount*N);
@@ -92,8 +100,8 @@ fitness(m2) {
 // Make this a command line argument
 
 	optima = readFile(optimaFile);
-	subpopCount = length(optima);
-//	subpopCount = 100;
+//	subpopCount = length(optima);
+	subpopCount = 20;
 	for (i in 0:(subpopCount-1)){
 		sim.addSubpopSplit(i, N, p999);
 		sim.subpopulations[i].tag = asInteger(optima[i]);
@@ -128,6 +136,11 @@ fitness(m2) {
 		return "a";
 	else
 		return 1. + s*genome1.individual.subpopulation.tag;
+}
+
+
+2000 early() {
+	sim.simulationFinished();
 }
 
 

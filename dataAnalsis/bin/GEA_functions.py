@@ -16,9 +16,8 @@ def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z"):
 
 	gea[statistic] = gea[statistic].replace(1 , 1-1e-3)
 
-## convert the p-values into 1-sided Z scores (hence the 1 - p-values)
-	gea["z"] = scipy.stats.norm.ppf(1 - gea[statistic])
-
+# convert the p-values into 1-sided Z scores (hence the 1 - p-values)
+	gea["z"] = scipy.stats.norm.ppf(1 - np.array( gea[statistic], dtype = float))
 ## Apply the MAF filter
 #	gea_filt = gea[ gea["maf"] > MAF_filter ].copy()
 
@@ -57,7 +56,7 @@ def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold,
 ## prop_hits - the average probility of getting a hit - this should be the quantile threshold
 ##top_candidate_threshold - the probability point for calculating the expected number of genes
 ## Identifty the hits
-	gea["hits"] = ( -np.log10(gea[statistic]) > -np.log10(thresh)).astype(int)
+	gea["hits"] = ( -np.log10( np.array( gea[statistic] , dtype = float)) > -np.log10(thresh)).astype(int)
 
 
 ## Apply the MAF filter
