@@ -8,13 +8,17 @@ initialize() {
 	defineConstant("optimaFile", "/Users/s0784966/UBC/GEA/simulations/slim_configs/BC_Map_environments.14x14.txt");
 	
 	defineConstant("N", 100);
-	defineConstant("s", 0.005); // This gives a fitness reduction of 1/2 between environmental extremes with 10 loci
+
+	defineConstant("s", 0.00065); // This gives a fitness reduction of 1/10 between environmental extremes with 12 loci
+//	defineConstant("s", 0.0003); // This gives a fitness reduction of 1/20 between environmental extremes with 12 loci
+//	defineConstant("s", 0.000065); // This gives a fitness reduction of 1/100 between environmental extremes with 12 loci
+
 
 //	defineConstant("REP", 1); // For saving files
 
 
 // For an island model Fst is well described and we can set the migration rate using the theoretical expectation
-	defineConstant("Fst", 0.05);
+	defineConstant("Fst", 0.03);
 
 // Keep track of the tree sequence for the population
 	initializeTreeSeq();
@@ -27,16 +31,17 @@ initialize() {
 // g1 genomic element type: uses m2 for all mutations
 	initializeGenomicElementType("g1", m2, 1.0);
 	
-	geneNumber = 1001; // This is actually 1+ the gene number
+	geneNumber = 501; // This is actually 1+ the gene number
 
-// Initialise a number of QTL equal to the gene number across the genome, slap a single selected base in the middle 
-	for (i in seq( 1, geneNumber -1 , asInteger(geneNumber/10))){
-//		initializeGenomicElement(g1, ((i-1)*10000+4998), ((i-1)*10000+4998));
-		initializeGenomicElement(g1, ((i-1)*500+249), ((i-1)*500+249));
+// Initialise 12 QTL  across the genome, slap a single selected base in the middle of each "gene" 
+	for (i in seq( 1, asInteger(geneNumber - geneNumber/5) -1 , asInteger((geneNumber - geneNumber/5)/12))){
+//		cat(i + "\n");
+		initializeGenomicElement(g1, ((i-1)*10000+4998), ((i-1)*10000+4998));
+//		initializeGenomicElement(g1, ((i-1)*500+249), ((i-1)*500+249));
 		}
 
-//	r = 1e-7;
-	r = 1e-7*20;
+	r = 1e-7;
+//	r = 1e-7*20;
 	
 	r_inter = 0.005;
 	
@@ -139,13 +144,8 @@ fitness(m2) {
 }
 
 
-2000 early() {
-	sim.simulationFinished();
-}
-
-
 200102 early() {
-	sim.treeSeqOutput(paste(c(REP,"_", s, ".10Loci.directionalSelection.trees"), sep=""));	
+	sim.treeSeqOutput(paste(c(REP,"_", s, ".12Loci.directionalSelection.trees"), sep=""));	
 	sim.simulationFinished();
 }
 

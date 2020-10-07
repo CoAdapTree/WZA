@@ -3,11 +3,6 @@
 \usepackage[normalem]{ulem}
 \useunder{\uline}{\ul}{}
 \articletype{inv} % article type
-% {inv} Investigation 
-% {gs} Genomic Selection
-% {goi} Genetics of Immunity 
-% {gos} Genetics of Sex 
-% {mp} Multiparental Populations
 
 \newcommand{\bm}[1]{\mbox{\boldmath{$#1$}}}
 
@@ -48,10 +43,10 @@ Here is a really concise and nicely written summary of the paper, highlighting t
 
 \section{Introduction}
 
-An understanding of the genes or genomic regions involved in adaptation, we might work towards conservation programs. Furthermore, developing our understanding of the genetic architecture of adaptation may help us inform models of the limits and constraints of evolvability. 
+With an understanding of the genes or genomic regions involved in adaptation, we might work towards conservation programs. Furthermore, developing our understanding of the genetic architecture of adaptation may help us inform models of the limits and constraints of evolvability. 
 Paragraph on local adaptation and why we might want to find the genes involved. \\
 
-Theoretical studies of local adaptation suggest that we should expect regions of the genome subject to spatially varying selection pressures to exhibit elevated linkage disequilibrium relative to the genomic background. There are several possible reasons why this might be the case. Firstly, a locus subject to strong spatially varying selection can act as a barrier to gene flow in that particular region of the genome and generate LD with neutrally evolving sites in surrounding regions (Barton and Bengston et al). Secondly, there is a selective advantage for alleles that are involved in local adaptation to aggregate in regions of low recombination so favourable combinations of alleles may be bound together into regions of high LD (Rieseberg 2001; Noor et al 2001; Kirkpatrick and Barton 2006; Yeaman 2012). For example, in sunflowers and \textit{Littorina} marine snails there is evidence that regions of suppressed recombination cause alleles involved in local adaptation to be inherited together (Morales et al 2019; Todesco et al 2020) and in conifers many of the genes putatively involved in local adaptation are in LD with each other (Yeaman et al 2016). Of course, the two processes we have outlined are not mutually exclusive. Nevertheless, a consequence of the LD induced by local adaptation is that genomic regions containing strongly selected alleles that contribute to local adaptation will potentially exhibit signals expected under local adaptation at linked neutral sites. \\
+Theoretical studies of local adaptation suggest that we should expect regions of the genome subject to spatially varying selection pressures to exhibit elevated linkage disequilibrium relative to the genomic background. There are several possible reasons why this might be the case. Firstly, a locus subject to strong spatially varying selection can act as a barrier to gene flow in that particular region of the genome and generate LD with neutrally evolving sites in surrounding regions (Barton and Bengston et al). Secondly, there is a selective advantage for alleles that are involved in local adaptation to aggregate in regions of low recombination so favourable combinations of alleles may be bound together into regions of high LD (Rieseberg 2001; Noor et al 2001; Kirkpatrick and Barton 2006; Yeaman 2012). For example, in sunflowers and \textit{Littorina} marine snails there is evidence that regions of suppressed recombination cause alleles involved in local adaptation to be inherited together (Morales et al 2019; Todesco et al 2020) and in conifers many of the genes putatively involved in local adaptation are in LD with each other (Yeaman et al 2016). Of course, the two processes we have outlined are not mutually exclusive, but overall genomic regions containing strongly selected alleles that contribute to local adaptation will potentially exhibit signals expected under local adaptation at multiple linked sites. \\
 
 A signature of local adaptation that can potentially be identified through the analysis of population genomic data is a correlation between allele frequencies and putatively selective features of the environment. So-called genotype-environment association (GEA) studies calculate and contrast such a correlation for many markers (typically single nucleotide polymorphisms, hereafter SNPs) across the genome. The strength of evidence for a particular SNP may be measured using \emph{p}-values, \emph{q}-values or Bayes factors. Genomic regions with particularly strong evidence for correlation with the environment may then indicate the presence of alleles that contribute to local adaptation. \\
 
@@ -60,7 +55,7 @@ In the context of GEA, the term environment may refer to any abiotic or biotic v
 Linked sites do not evolve independently. If the rate of recombination is low relative to the rate of migration, there may be strong autocorrelation in the coalescent histories among tightly linked sites. Under that assumption, all of the neutral SNPs present within an appropriately sized region provide independent tests of the following hypothesis, "is the genetic variation in this genomic region associated with variation in the environment?".
 
 
-In this study, we propose the Weighted-Z Analysis (hereafter, the WZA) for combining information across linked sites in the context of GEA studies. The weighted-Z test, which is often used in the context of meta-analyses, combines \textit{p}-values from multiple independent tests into a single score with each test given a weight that is proportional to the inverse of its error variance (Whitlock 2004; Other Refs). 
+
 
 using combining information across tightly linked sites to identify regions of the genome under selection. 
 Typically GEA studies examine patterns of genetic variation across a landscape at many polymorphic sites.  
@@ -70,19 +65,15 @@ Typically GEA studies examine patterns of genetic variation across a landscape a
 
 \subsection{\underline{The Weighted-Z Analysis}} 
 
-The weighted-Z test combines \textit{p}-values from multiple independent tests into a single score with each test given a weight that is proportional to the inverse of its error variance (Whitlock 2004). 
+In this study, we propose the Weighted-Z Analysis (hereafter, the WZA) for combining information across linked sites in the context of GEA studies. The weighted-Z test combines \textit{p}-values from multiple independent tests into a single score with each test given a weight that is proportional to the inverse of its error variance (Whitlock 2004). Inspired by Weir and Cockerham's (1984) method for combining estimates of $F_{ST}$ across sites, we use a marker's allele frequency to determine weights when performing the Weighted-Z test on GEA data. At a given polymorphic site, we denote the average frequency of the minor allele across populations as $\overline{p}$ ($\overline{q}$ corresponds to the major allele). The product $\overline{p}\overline{q}$ provides an estimate of the variance in allele frequencies among populations, so is appropriate as a weight.
 
-At a given polymorphic site, we denote the average frequency of the minor allele across populations as $\overline{p}$ ($\overline{q}$ corresponds to the major allele). The product $\overline{p}\overline{q}$ provides an estimate of the variance in allele frequencies among populations, so is appropriate as a weight.  
-
-Here we propose the weighted-Z analysis (hereafter the WZA) as a means to combine information across sites. Each polymorphic site (typically single nucleotide polymorphisms) is used to calculate a 
-In the context of GEA we combine information in 
-For genomic region, \textit{k}, which contains \textit{n} polymorphic sites we calculate the following,
+We combine information from multiple GEA tests performed on SNPs present in a particular region into a single weighted-Z score ($Z_W$). For genomic region \textit{k}, which contains \textit{n} polymorphic sites, we calculate 
 
 \begin{equation}
 \label{weightedZ}
-Z_{w,k} =  \frac {\sum\limits_{i=1}^n \overline{p_i} \overline{q_i}z_i}{\sqrt{ \sum\limits_{i=1}^n (\overline{p_i}\overline{q_i})^2} }
+Z_{w,k} =  \frac {\sum\limits_{i=1}^n \overline{p_i} \overline{q_i}z_i}{\sqrt{ \sum\limits_{i=1}^n (\overline{p_i}\overline{q_i})^2} },
 \end{equation}
-where $\overline{p_i}$ and $\overline{q_i}$ are the average allele frequencies across demes for polymorphism \textit{i} and $z_i$ is the standard normal deviate.
+where $\overline{p_i}$ and $\overline{q_i}$ are the average allele frequencies across demes for polymorphism \textit{i} and $z_i$ is the standard normal deviate calculated from the one-side \textit{p}-value for SNP \textit{i}.
 
 
 
@@ -144,7 +135,7 @@ We added neutral mutations to each simulated tree sequence at a rate of $1\times
 For each SNP, we calculated Kendall's $\tau$ and recorded the $p$-value. We chose Kendall's $\tau$ over Spearman's $\rho$ as an uncorrected GEA statistic as it can handle ties in data, 
 
 
-\subsection{Application to data from Lodgepole pine}
+\subsection{Analysis of data from Lodgepole pine}
 
 We re-analysed a population genomic dataset collected for lodgepole pine distributed across the North West of North America. The data were initially generated and described by Yeaman et al (2016). Initially, the top-candidate test was applied to this data. We calculated $Z_W$ scores for the same genes analysed by Yeaman et al (2016). Data were accessed from the Dryad respository associated with Yeaman et al (2016) (DRYADLINK)
 
@@ -188,8 +179,15 @@ Recombination rates vary widely among taxa but also within the genome (Stapley e
 
 \subsection{Application of the WZA to data from lodgepole pine}
 
-To demonstrate how one might apply the WZA to the analysis of real data, we re-analysed the lodgepole pine data from Yeaman et al (2016). Briefly, Yeaman et al (2016) collected samples and sequenced individuals from 666 populations across British Columbia and Alberta, Canada and from Northern Washington, USA. Data were downloaded from the Dryad repository associated with the paper. 
+To demonstrate how one might apply the WZA to the analysis of real data, we re-analysed the lodgepole pine (\textit{Pinus contorta}) data from Yeaman et al (2016). Briefly, Yeaman et al (2016) collected samples from 666 populations across British Columbia and Alberta, Canada and from Northern Washington, USA. Individuals in each 
+Data were downloaded from the Dryad repository associated with the paper. 
 
+\begin{figure}
+  \includegraphics[width=0.75\textwidth,height=0.75\textheight,keepaspectratio]{../dataAnalsis/Z_v_MAF_DD0.png}
+  \caption{The WZA applied to GEA results Lodgepole Pine for degree days below 0 (DD0). A) $Z_w$ scores compared to scores from the top-candidate test for each of the genes analyesd by Yeaman et al (2016). Panels B-E show the results for $-log_{10}$(\textit{p}-values) for Spearman's $\rho$ applied to individual SNPs against minor allele frequency (MAF). The dashed horizontal line in B-D indicates the $99^{th}$ percentile of GEA $-log_{10}$(\textit{p}-values) genome-wide.}
+
+  \label{fig:lodgepole}
+\end{figure}
 
 
 \section{Discussion}
@@ -218,20 +216,23 @@ Thanks to Pooja Singh for discussions, to Tongli Wang for help with BC climate d
 \section{Appendix}
 
 
-Consider a hypothetical metapopulation of 1 million individuals distributed evenly among 196 demes. It would be computationally intractable to simulate all $10^6$ individuals forward-in-time incorporating adaptation to environmental heterogeneity across a landscape and recombining chromosomes. We scaled several population genetic parameters to model a large population by simulating a much smaller population. In the following sections, we outline and justify the approach we used to scale pertinent population genetic parameters. 
+Consider a hypothetical metapopulation of 1 million individuals distributed evenly among 196 demes. It would be computationally intractable to simulate all $10^6$ individuals forward-in-time, incorporating adaptation to environmental heterogeneity across a landscape and recombining chromosomes. We scaled several population genetic parameters to model a large population by simulating a much smaller population. In the following sections, we outline and justify the approach we used to scale pertinent population genetic parameters. 
 
 \subsubsection{Recombination rates}
 
-In panmictic populations, linkage disequilibrium can be predicted by the scaled recombination parameter $\rho = 4N_er$, where \textit{r} is the recombination rate per base-pair and $N_e$ is the effective population size. In structured populations, LD is elevated above the panmictic expectation and can be described by the effective size of the local population (or deme), the recombination rate and the migration rate (McVean paper). Assuming a recombination rate of 1 cM/Mbp, the hypothetical organism would have $\rho = 0.0002$. 
-To achieve levels of LD-decay in our simulations that are similar to those expected in real organisms, we chose a recombination rate (\textit{r}) that 
+In panmictic populations, linkage disequilibrium can be predicted by the scaled recombination parameter $\rho = 4N_er$, where \textit{r} is the recombination rate per base-pair and $N_e$ is the effective population size. In structured populations, LD is elevated above the panmictic expectation and can be described by the effective size of the local population (or deme), the recombination rate and the migration rate (McVean paper). Assuming a recombination rate of 1 cM/Mbp, the hypothetical organism would have $4N_dr = 0.0002$. To achieve levels of LD-decay in our simulations that are similar to those expected in our hypothetical organism, we set $4N_dr = 0.0002$, but with only 100 individuals per deme that gave a per base pair recombination of $5.10 \times 10^{-7}$.
 
 \subsubsection{Selection coefficients} 
 
-As noted in the main text, studies of local adaptation have reported as 
+It is difficult to choose a realistic set of selection parameters for modelling local adaptation because there are, at present, few estimates of the distribution of fitness effects for mutations that have spatially divergent effects. However, common garden studies of a variety of taxa have estimated fitness differences of up to 50\% between populations grown in home-like conditions versus away-like conditions (REF). Motivated by such studies, we chose to parameterise selection using the maximum possible fitness difference between home versus away environments. By setting the maximum reduction to $
+have demonstrated in a variety of taxa that there 
 
 \subsubsection{Migration rate} 
 
+For the migration rate, we worked backwards. We set out to achieve $F_{ST}$ across the metapopulation of around 0.05, as has been reported for a numerous widely distributed tree species (REF). For an island model, we can 
+
 \subsubsection{Mutation rate} 
+
 
 \begin{table}[]
 \label{SimulationParameters}

@@ -274,6 +274,20 @@ def main():
 ## Combine all contig-specific dataframes into a single big one
 		outputDF = pd.concat(all_contigs)
 		
+## Get the expected proportion of hits per hit-bearing gene
+		expected = outputDF[outputDF["hits"]!=0]["hits"].sum() / outputDF[outputDF["hits"]!=0]["SNPs"].sum()
+
+		print("expected proportion", expected)
+
+		top_candidate_p = [ scipy.stats.binom_test(h, s, expected, alternative = "greater" ) for h, s in zip(outputDF.hits, outputDF.SNPs)]
+		
+		outputDF["top_candidate_p"] = top_candidate_p 
+
+#		expected_hits = [ scipy.stats.binom.ppf( 0.9999 , s, expected )  for s in outputDF.SNPs]
+
+		outputDF["expected_hits"] =  scipy.stats.binom.ppf( 0.9999 , outputDF.SNPs, expected )  
+
+		
 ## Write the dataframe to an output file
 		outputDF.to_csv(env + "_" + args.output,index = False)
 

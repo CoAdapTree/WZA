@@ -58,7 +58,6 @@ def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold,
 ## Identifty the hits
 	gea["hits"] = ( -np.log10( np.array( gea[statistic] , dtype = float)) > -np.log10(thresh)).astype(int)
 
-
 ## Apply the MAF filter
 #	gea_filt = gea[ gea["maf"] > MAF_filter ]
 	gea_filt = gea.copy()
@@ -75,23 +74,25 @@ def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold,
 ## Name the cols
 	TC.columns = ["hits", "SNPs"]
 
+	return(TC)
+
 ## Init an empty vector for p_values (the top-candidate index)
 	p_vals = []
 
-## Init an empty vector for expected hits at the "top-candidate" threshold
-	expectedHits = []
-	for index, row in TC.iterrows():
+### Init an empty vector for expected hits at the "top-candidate" threshold
+#	expectedHits = []
+#	for index, row in TC.iterrows():
 #		print(row.hits, row.SNPs, top_candidate_threshold )
-		p_vals.append( scipy.stats.binom_test(row.hits, row.SNPs, threshQuant, alternative = "greater" ) )
-		expectedHits.append( scipy.stats.binom.ppf( top_candidate_threshold , row.SNPs, threshQuant ) )
+#		p_vals.append( scipy.stats.binom_test(row.hits, row.SNPs, threshQuant, alternative = "greater" ) )
+#		expectedHits.append( scipy.stats.binom.ppf( top_candidate_threshold , row.SNPs, threshQuant ) )
 
 
 ## Add the TC p_vals to the genes DF
-	TC["top_candidate_p"] = p_vals
+#	TC["top_candidate_p"] = p_vals
 
 ## Add the TC expected number of hits to the genes DF
-	TC["expected_outliers"] = expectedHits
+#	TC["expected_outliers"] = expectedHits
 
 
 ## Return the resulting dataFrame
-	return(TC)
+#	return(TC)

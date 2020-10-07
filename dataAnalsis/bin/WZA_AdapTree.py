@@ -144,7 +144,16 @@ def main():
 			help = "If you want to analyse just a single environment, give it here [DD_0]",
 			
 			default = "DD_0")
+			
+	parser.add_argument("--bay", 
 
+			required = False,
+
+			dest = "bay",
+
+			action = "store_true", 
+
+			help = "[OPTIONAL] Give this flag if the analysis files are BayesFactors from bayEnv.")
 
 	args = parser.parse_args()
 
@@ -152,6 +161,7 @@ def main():
 ## MAT MWMT MCMT TD MAP MSP AHM SHM DD_0 DDS NFFD bFFP FFP PAS EMT EXT Eref CMD
 
 	adapTreeEnvs = ["LAT"	,"LONG"	,"ELEVATION"	,"MAT"	,"MWMT"	,"MCMT"	,"TD"	,"MAP"	,"MSP"	,"AHM"	,"SHM"	,"DD_0"	,"DD5"	,"NFFD"	,"bFFP"	,"eFFP"	,"FFP"	,"PAS"	,"EMT"	,"EXT"	,"Eref"	,"CMD"	,"Budset_p"	,"Budbreak_p"	,"Height_season_1_p"	,"Height_season_2_p"	,"Diameter_p"	,"Shoot_weight_p"	,"Root_weight_p"	,"Max_growth_rate_p"	,"Linear_growth_days_p"	,"X5_growth_complete_days_p"	,"X95_growth_complete_days_p"	,"X5_95_growth_days_p"	,"Fall_cold_injury_p"	,"Winter_cold_injury_p"	,"Spring_cold_injury_p"	,"root_wt_shoot_wt_p"	,"root_wt_shoot_wt_p_1"]
+
 	adapTreeEnvDict = {}
 	
 	for i in range(len(adapTreeEnvs)):
@@ -167,7 +177,10 @@ def main():
 
 ## We're going to analyse each env. separately
 	for env in envs:
-		envIndex = adapTreeEnvDict[env]
+		if args.bay:
+			envIndex = -1
+		else:	
+			envIndex = adapTreeEnvDict[env]
 		all_contigs = []
 
 ## Now let's calculate the outlier threshold (for the TC test) from the data - Make sure it's a percentile!
@@ -180,8 +193,13 @@ def main():
 
 		print("Analysing:",env)
 		
+		count = 0
+		
 ## Iterate over contigs spat out by the 
 		for contig,SNPs in contigGenerator(args.correlations, envIndex):
+			count += 1
+			print(contig, count)
+			if count ==100: break
 
 ## Grab all the genes present on this contig
 			contigDF = contigSnpTable(SNPs)
@@ -209,12 +227,32 @@ def main():
 			result["env"] = env
 
 			all_contigs.append( result )
+
+			if count%1000 == 0:
+				print( count,"contigs analysed")
+			
 			
 		if len( all_contigs ) == 0: continue 
 		
 ## Combine all contig-specific dataframes into a single big one
 		outputDF = pd.concat(all_contigs)
+
+## Get the expected proportion of hits per hit-bearing gene
+		expected = outputDF[outputDF["hits"]!=0]["hits"].sum() / outputDF[outputDF["hits"]!=0]["SNPs"].sum()
+
+		print("expected proportion", expected)
+		top_candidate_p = [ scipy.stats.binom_test(h, s, expected, alternative = "greater" ) for h, s in zip(outputDF.hits, outputDF.SNPs)]
 		
+		outputDF["top_candidate_p"] = top_candidate_p 
+#		outputDF["top_candidate_p"] = scipy.stats.binom_test(outputDF.hits, outputDF.SNPs, expected, alternative = "greater" ) 
+		expected_hits = [ scipy.stats.binom.ppf( 0.9999 , s, expected )  for s in outputDF.SNPs]
+
+		outputDF["expected_hits"] =  scipy.stats.binom.ppf( 0.9999 , outputDF.SNPs, expected )  
+
+## Calculate the top-candidate index
+#		outputDF = pd.concat(all_contigs)		
+
+
 ## Write the dataframe to an output file
 		outputDF.to_csv(env + "_" + args.output,index = False)
 

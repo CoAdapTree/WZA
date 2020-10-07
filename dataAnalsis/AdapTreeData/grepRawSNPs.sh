@@ -1,2 +1,5 @@
-head -n1 ../../../../Convergence/Yeaman_Data/doi_10.5061_dryad.0t407__v1/yeaman_pine_spruce_convergence_archive2/var_out_GATK3_allhet_pine688_ALL.summary.ALL.annots.sorted.GOOD.window.all_assoc_pval_raw  > $1.tsv
-grep $1 ../../../../Convergence/Yeaman_Data/doi_10.5061_dryad.0t407__v1/yeaman_pine_spruce_convergence_archive2/var_out_GATK3_allhet_pine688_ALL.summary.ALL.annots.sorted.GOOD.window.all_assoc_pval_raw  >> $1.tsv
+head -n1 ../../../../Convergence/Yeaman_Data/var_out_GATK3_allhet_pine688_ALL.summary.ALL.annots.sorted.GOOD.window.all_assoc_pval_bf_eP.tsv > $1.tsv
+
+grep $1 ../../../../Convergence/Yeaman_Data/var_out_GATK3_allhet_pine688_ALL.summary.ALL.annots.sorted.GOOD.window.all_assoc_pval_bf_eP.tsv >> $1.tsv
+
+#../../../../Convergence/Yeaman_Data/var_out_GATK3_allhet_pine688_ALL.summary.ALL.annots.sorted.GOOD.window.all_assoc_pval_bf_eP.tsv
