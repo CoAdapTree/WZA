@@ -92,23 +92,20 @@ The simulated populations inhabited a $14\times14$ 2-dimensional stepping-stone 
 
 %Local adaptation can act as a barrier to gene-flow, individuals that migrate from locations where they are well adapted into locations where they are disfavoured may not survive to propagate, so even freely recombining regions of the genome are linked to a degree and will influence evolution in regions of the genome that are freely recombining. To model local adaptation in unlinked regions of the genome, we modelled three cartoon chromosomes. The cartoon chromosomes were short sequences, 1,000bp long, that had a genetic map and net mutation rate (\textit{$U_a$}) that was the as the focal chromosome. 
 
-We simulated three kinds of environment. The first was a reduced representation of climatic variation across British Columbia, Canada. We downloaded the map of degree days greater than 0 (DD0) for British Columbia from ClimateBC (website; REF). From the DD0 map, we extracted the data for a 99x99 grid using Dog Mountain, BC as the reference point in the South-West corner. We divided this map into a 14x14 grid. Each cell corresponded to an area of XX$km^2$. We calculated the mean DD0 for each cell in the grid. We then converted the mean DD0 scores into Z-scores and rounded values up to the nearest third. These data were then used as the phenotypic optima for population models in SLiM.
+We simulated three kinds of environment. The first was a reduced representation of climatic variation across British Columbia, Canada. We downloaded the map of degree days greater than 0 (DD0) for British Columbia from ClimateBC (website; REF). From the DD0 map (Figure 1A), we extracted the data for a 99x99 grid using Dog Mountain, BC as the reference point in the South-West corner. We divided this map into a 14x14 grid. Each cell corresponded to an area of XX$km^2$. We calculated the mean DD0 for each cell in the grid. We then converted the mean DD0 scores into Z-scores and rounded values up to the nearest third. These data were then used as the phenotypic optima for population models in SLiM. The data from the BC Map were then ordered along one axis of the 2D stepping-stone, we refer to this map as the \textit{cline} map (Figure 1C). Finally, we truncated the distribution of Z-scores from the BC map at +3, setting all demes with a DD0 Z score greater than or equal to 3 to 3, and all others to -1. We refer to this map as the \textit{Truncated map} (Figure 1D).
 
-We simulated local adaptation in four metapopulation models. The first is the island model, which represents an unstructured metapopulation. 
+In addition, we simulated local adaptation in a metapopultion with no spatial structure (i.e. an island model).  The first is the island model, which represents an unstructured metapopulation. 
 
-Environments exhibit spatial autocorrelation. To model spatial autocorrelation in environment, we simulated a 2-dimensional stepping-stone model. 
+%We constructed a map using data for real climate variation from British Columbia, Canada. We downloaded the map of degree days greater than 0 for British Columbia from ClimateBC (website; REF). From the DD0 map, we extracted the data for a 99x99 grid using Dog Mountain, BC as the reference point in the South-West corner. We divided this map into a 16x16 grid and calculated the mean DD0 for each cell. We converted the means into Z-scores and rounded values up to the nearest third of a Z-score. These data were then used as the phenotypic optima for a structured population models in SLiM.
 
-We simulated local adaptation across an 
-We constructed a map using data for real climate variation from British Columbia, Canada. We downloaded the map of degree days greater than 0 for British Columbia from ClimateBC (website; REF). From the DD0 map, we extracted the data for a 99x99 grid using Dog Mountain, BC as the reference point in the South-West corner. We divided this map into a 16x16 grid and calculated the mean DD0 for each cell. We converted the means into Z-scores and rounded values up to the nearest third of a Z-score. These data were then used as the phenotypic optima for a structured population models in SLiM.
+%We simulated local adaptation using a model of stabilising selection. We modelled a genome of composed of four autosomes. 
 
-We simulated local adaptation using a model of stabilising selection. We modelled a genome of composed of four autosomes. 
-
-We used the standard expression for Gaussian stabilising selection,
-\begin{equation}
-\notag
-W(z_{i,j}) = exp \Big[\frac{-(z_{i,j} - \theta_j)^2}{2V_s}\Big],
-\end{equation}
-where $z_i$ is the phenotype of the $i^{th}$ individual in environment $j$, $\theta_j$ is the phenotypic optimum of environment $j$, and $V_s$ is the variance of the Gaussian fitness function. 
+%We used the standard expression for Gaussian stabilising selection,
+%\begin{equation}
+%\notag
+%W(z_{i,j}) = exp \Big[\frac{-(z_{i,j} - \theta_j)^2}{2V_s}\Big],
+%\end{equation}
+%where $z_i$ is the phenotype of the $i^{th}$ individual in environment $j$, $\theta_j$ is the phenotypic optimum of environment $j$, and $V_s$ is the variance of the Gaussian fitness function. 
 
 To test the performance of the weighted-Z analysis (WZA), we modelled populations adapting to various environments. Figure \ref{fig:EnvGrid} shows a diagram of each of the populations simulated.
 
@@ -165,13 +162,23 @@ Some degree of isolation-by-adaptation should probably be expected in natural or
 The populations we simulated had \textbf{5} chromosomes, one of which was strictly neutral. Applying the WZA to simulated genes from a neutrally evolving chromosome in a locally adaptated population allows us to test whether isolation-by-adaptation causes a 
 
 \begin{figure}
-  \includegraphics[width=\linewidth]{../../Plots/environmentGridPlot.png}
+  \includegraphics[width=\linewidth]{../../Plots/environmentGridPlot_2x2.png}
   \caption{Three models of population structure used to simulated varying degrees of spatial autocorrelation in the environment. A) A highly discretized map of degree-days above 0 (DD0) in South-Western British Columbia, capturing realistic spatial autocorrelation in an environmental variable species may respond to. We refer to the map in A as the BC map. B) A 1-dimensional cline in phenotypic optimum, we refer to this as the cline map. C) A heterogenous distribution of phenotyic optima. The distribution of phenotypic optima in the cline and random maps}
   
   \label{fig:boat1}
 \end{figure}
 
 \subsection{Comparison of the WZA and the top-candidate test}
+
+
+
+\begin{figure}
+  \includegraphics[]{../SimulationStudy/directionalSelection/G.2.3/PowerPlot_sampledData.png}
+  \caption{Summary statistics from simulations. A) shows the $F_{ST}$ between pairs of demes in stepping-stone populations, the average across replicates is . B) shows the average LD between pairs of SNPs, each line corresponds to a single simulation replicate.}
+
+  \label{fig:lodgepole}
+\end{figure}
+
 
 \subsection{Recombination rate variation}
 
@@ -224,7 +231,7 @@ In panmictic populations, linkage disequilibrium can be predicted by the scaled 
 
 \subsubsection{Selection coefficients} 
 
-It is difficult to choose a realistic set of selection parameters for modelling local adaptation because there are, at present, few estimates of the distribution of fitness effects for mutations that have spatially divergent effects. However, common garden studies of a variety of taxa have estimated fitness differences of up to 50\% between populations grown in home-like conditions versus away-like conditions (REF). Motivated by such studies, we chose to parameterise selection using the maximum possible fitness difference between home versus away environments. By setting the maximum reduction to $
+It is difficult to choose a realistic set of selection parameters for modelling local adaptation because there are, at present, few estimates of the distribution of fitness effects for mutations that have spatially divergent effects. However, common garden studies of a variety of taxa have estimated fitness differences of up to 50\% between populations grown in home-like conditions versus away-like conditions (REF). Motivated by such studies, we chose to parameterise selection using the maximum possible fitness difference between home versus away environments. By setting the maximum reduction to $!$
 have demonstrated in a variety of taxa that there 
 
 \subsubsection{Migration rate} 
@@ -250,6 +257,14 @@ Functional mutation rate (\textit{$\mu_\alpha$})                        & $2\tim
 \end{tabular}
 \end{table}
 \subsubsection{Chromosomal architecture}
+
+
+\begin{figure}
+  \includegraphics[width=0.75\textwidth,height=0.75\textheight,keepaspectratio]{../SimulationStudy/directionalSelection/SummaryStats.png}
+  \caption{Summary statistics from simulations. A) shows the $F_{ST}$ between pairs of demes in stepping-stone populations, the average across replicates is . B) shows the average LD between pairs of SNPs, each line corresponds to a single simulation replicate.}
+
+  \label{fig:lodgepole}
+\end{figure}
 
 
 \end{document}
