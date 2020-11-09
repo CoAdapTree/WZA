@@ -34,4 +34,19 @@ nLoci = 12
 (1+s*-7)^nLoci /(1+s*7)^nLoci 
 
 
+#########
+######### Stabilising Selection
+#########
+
+gaussianFitness <- function(phen, opt, Vs){
+  exp( (-1*( phen - opt)^2)/(2*Vs)) 
+}
+
+## 40% Fitness difference
+Vs = 192
+gaussianFitness(-7,7,Vs)/ gaussianFitness(7,7,Vs)
+
+## 10% Fitness difference
+Vs = 900
+gaussianFitness(-7,7,Vs)/ gaussianFitness(7,7,Vs)
 

@@ -97,7 +97,7 @@ def correlationThreshold( corData, targetEnv, percentile_threshold = 99.9):
 	pValues = []
 	with open( corData ) as cor:
 		for c in cor:
-			if c.startswith("X.annotation"):continue
+			if c.startswith("X.annotation") or c.startswith("X_annotation"):continue
 			currentLine = corLine(c, targetEnv)
 			if currentLine.pVal == "NA": continue
 			pValues.append(currentLine.pVal)
