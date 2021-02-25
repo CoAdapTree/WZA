@@ -28,6 +28,9 @@ class corLine:
 
 		self.pbar_qbar = MAF * (1 - MAF) 
 
+		self.emp_pVal = float(dat[5])
+
+
 ## A generator function to spit out the consecutive lines for the contig
 def contigGenerator(correlationFile, envFilter):
 
@@ -89,6 +92,7 @@ def contigSnpTable(snps, contig_dat):
 									"pos":s.pos,
 									"rho":s.rho,
 									"pVal":s.pVal,
+									"empirical_pVal":s.emp_pVal,
 									"pbar_qbar":s.pbar_qbar,
 									"gene":gene_name,
 									"gene_start":gene_start,
@@ -254,14 +258,18 @@ def main():
 			
 			anno_end = contigDF.groupby(["gene"])["gene_end"].mean().to_frame()
 
-## Perform the WZA on the annotations in the contig
-			wza = WZA(contigDF, "pVal")
+
+## Perform the WZA on the annotations in the contig using parametric ps
+			wza_pVal = WZA(contigDF, "pVal", varName = "Z_p")
+
+## Perform the WZA on the annotations in the contig using empirical ps
+			wza_emp_pVal = WZA(contigDF, "empirical_pVal", varName = "Z_empP")
 
 ## Perform the top-candidate for the annotations in the contig
 			TopCan = top_candidate( contigDF, threshold_99th, 0.01, "pVal", 0.9999, MAF_filter = 0.05 )
 
 ## Combine the results
-			result = pd.concat([ position, wza, TopCan, anno_start, anno_end] , axis = 1, sort = True ).reset_index()
+			result = pd.concat([ position, wza_pVal, wza_emp_pVal, TopCan, anno_start, anno_end] , axis = 1, sort = True ).reset_index()
 
 			result["contig"] = contig
 

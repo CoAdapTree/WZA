@@ -25,22 +25,23 @@ def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z"):
 
 ## Calculate the numerator and the denominator for the WZA
 
-	gea_filt[varName+"weiZ_num"] = gea_filt["pbar_qbar"] * gea_filt["z"]
+	gea_filt[varName+"_weiZ_num"] = gea_filt["pbar_qbar"] * gea_filt["z"]
 
-	gea_filt[varName+"weiZ_den"] =  gea_filt["pbar_qbar"]**2 	
+	gea_filt[varName+"_weiZ_den"] =  gea_filt["pbar_qbar"]**2 	
 
-	numerator = gea_filt.groupby(["gene"])[varName+"weiZ_num"].sum().to_frame()
+	numerator = gea_filt.groupby(["gene"])[varName+"_weiZ_num"].sum().to_frame()
 
-	denominator = np.sqrt(gea_filt.groupby(["gene"])[varName+"weiZ_den"].sum()).to_frame()
+	denominator = np.sqrt(gea_filt.groupby(["gene"])[varName+"_weiZ_den"].sum()).to_frame()
 
 ## We've calculated the num. and the den., let's make a dataframe that has both 
 	weiZ  = pd.concat([numerator,denominator], axis = 1, sort = False)
 
 ## Actually calculate the Z scores for each gene
-	weiZ[varName] = weiZ[varName+"weiZ_num"] / weiZ[varName+"weiZ_den"]
+	weiZ[varName] = weiZ[varName+"_weiZ_num"] / weiZ[varName+"_weiZ_den"]
 
+## Deprecated
 ## One might be interested in calculating a p_value from the Z-scores (though this only works if the data are normal, which they won't be if there's populations structure).
-	weiZ[varName+"_hits"] = (weiZ[varName] > scipy.stats.norm.ppf(1 - 0.05/50)).astype(int)
+##	weiZ[varName+"_hits"] = (weiZ[varName] > scipy.stats.norm.ppf(1 - 0.05/50)).astype(int)
 
 ## Return the final dataframe
 	return weiZ
