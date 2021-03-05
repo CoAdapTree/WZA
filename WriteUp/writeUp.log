@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.12)  24 FEB 2021 23:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.12.12)  3 MAR 2021 00:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1588,6 +1588,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 45--45
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--45
+
+ []
+
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
 (Font)              scaled to size 11.40997pt on input line 45.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
@@ -1631,221 +1636,317 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--62
 [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 63--64
+
+ []
+
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 76.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 70.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 76.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 70.
 LaTeX Font Info:    Font shape `T1/phv/b/sl' will be
-(Font)              scaled to size 10.40245pt on input line 76.
+(Font)              scaled to size 10.40245pt on input line 70.
 
-Underfull \hbox (badness 10000) in paragraph at lines 78--79
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 87--88
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
 
  []
 
 
-Underfull \vbox (badness 1270) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
 
- [2]
+ []
 
-Package caption Warning: \label without proper \caption on input line 336.
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
+
+ []
+
+
+Package caption Warning: \label without proper \caption on input line 334.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `SimulationParameters' on page 3 undefined on input li
-ne 97.
+LaTeX Warning: Reference `tab:SimulationParameters' on page 3 undefined on inpu
+t line 93.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
+
+ []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 97--98
 
  []
 
-
+[3]
 Underfull \hbox (badness 10000) in paragraph at lines 99--100
 
  []
 
 
-LaTeX Warning: Reference `fig:EnvGrid' on page 3 undefined on input line 118.
+Underfull \hbox (badness 10000) in paragraph at lines 101--102
 
-[3]pdfTeX warning (ext4): destination with the same identifier (name{equation.0
-.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.129 \begin{equation}
-                      pdfTeX warning (ext4): destination with the same identifi
-er (name{equation.0.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.129 \begin{equation}
-                      pdfTeX warning (ext4): destination with the same identifi
-er (name{equation.0.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.129 \begin{equation}
-                      pdfTeX warning (ext4): destination with the same identifi
-er (name{equation.0.2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.129 \begin{equation}
-                       [4]
-<../../Plots/environmentGridPlot_2x2.png, id=45, 3011.25pt x 3011.25pt>
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--105
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--105
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--118
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
+
+ []
+
+[4] <../../Plots/environmentGridPlot_2x2.png, id=45, 3011.25pt x 3011.25pt>
 File: ../../Plots/environmentGridPlot_2x2.png Graphic file (type png)
 
 <use ../../Plots/environmentGridPlot_2x2.png>
 Package pdftex.def Info: ../../Plots/environmentGridPlot_2x2.png used on input 
-line 183.
+line 124.
 (pdftex.def)             Requested size: 314.58018pt x 314.55943pt.
 
-<Plots/neutralResults_histogram.pdf, id=47, 505.89pt x 867.24pt>
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 137--138
+
+ []
+
+[5 <../../Plots/environmentGridPlot_2x2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 157--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--160
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 161--162
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 163--164
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--167
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 168--169
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--174
+
+ []
+
+[6] <Plots/neutralResults_histogram.pdf, id=57, 505.89pt x 867.24pt>
 File: Plots/neutralResults_histogram.pdf Graphic file (type pdf)
 
 <use Plots/neutralResults_histogram.pdf>
 Package pdftex.def Info: Plots/neutralResults_histogram.pdf used on input line 
-194.
+209.
 (pdftex.def)             Requested size: 314.58018pt x 539.28445pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [5 <../../Plots/environmentGridPlot_2x2.png>] [6 <./Plots/neutralResults_histo
-gram.pdf>]
-
-LaTeX Warning: Reference `fig:normalIsland' on page 7 undefined on input line 2
-06.
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 LaTeX Warning: Reference `fig:normalIsland' on page 7 undefined on input line 2
-06.
+18.
 
 
-<Plots/UncorrectedBayPassComparison_TruePositives.pdf, id=69, 650.43pt x 686.56
+LaTeX Warning: Reference `fig:normalIsland' on page 7 undefined on input line 2
+18.
+
+
+<Plots/UncorrectedBayPassComparison_TruePositives.pdf, id=58, 650.43pt x 686.56
 5pt>
 File: Plots/UncorrectedBayPassComparison_TruePositives.pdf Graphic file (type p
 df)
  <use Plots/UncorrectedBayPassComparison_TruePositives.pdf>
 Package pdftex.def Info: Plots/UncorrectedBayPassComparison_TruePositives.pdf u
-sed on input line 220.
+sed on input line 229.
 (pdftex.def)             Requested size: 524.295pt x 553.46414pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [7]
-<Plots/UncorrectedBayPassComparison_FalsePositives.pdf, id=75, 650.43pt x 686.5
+
+LaTeX Warning: Reference `fig:falseDiscovery' on page 8 undefined on input line
+ 235.
+
+
+<Plots/UncorrectedBayPassComparison_FalsePositives.pdf, id=64, 650.43pt x 686.5
 65pt>
 File: Plots/UncorrectedBayPassComparison_FalsePositives.pdf Graphic file (type 
 pdf)
  <use Plots/UncorrectedBayPassComparison_FalsePositives.pdf>
 Package pdftex.def Info: Plots/UncorrectedBayPassComparison_FalsePositives.pdf 
-used on input line 227.
+used on input line 239.
 (pdftex.def)             Requested size: 524.295pt x 553.46414pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [8 <./Plots/UncorrectedBayPassComparison_TruePositives.pdf>]
-<Plots/correlatedEnvironments_BCmapResults.pdf, id=87, 614.295pt x 433.62pt>
+<Plots/correlatedEnvironments_BCmapResults.pdf, id=76, 614.295pt x 433.62pt>
 File: Plots/correlatedEnvironments_BCmapResults.pdf Graphic file (type pdf)
 
 <use Plots/correlatedEnvironments_BCmapResults.pdf>
 Package pdftex.def Info: Plots/correlatedEnvironments_BCmapResults.pdf used on 
-input line 235.
+input line 247.
 (pdftex.def)             Requested size: 524.295pt x 370.11377pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [9 <./Plots/UncorrectedBayPassComparison_FalsePositives.pdf>]
-<Plots/recombinationRateHistogram.pdf, id=99, 433.62pt x 216.81pt>
+<Plots/recombinationRateHistogram.pdf, id=88, 433.62pt x 216.81pt>
 File: Plots/recombinationRateHistogram.pdf Graphic file (type pdf)
 
 <use Plots/recombinationRateHistogram.pdf>
 Package pdftex.def Info: Plots/recombinationRateHistogram.pdf used on input lin
-e 251.
+e 263.
 (pdftex.def)             Requested size: 393.23843pt x 196.6192pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [10 <./Plots/correlatedEnvironments_BCmapResults.pdf>]
-<../dataAnalsis/Z_v_MAF_DD0.png, id=110, 1505.625pt x 3011.25pt>
+<../dataAnalsis/Z_v_MAF_DD0.png, id=99, 1505.625pt x 3011.25pt>
 File: ../dataAnalsis/Z_v_MAF_DD0.png Graphic file (type png)
 
 <use ../dataAnalsis/Z_v_MAF_DD0.png>
-Package pdftex.def Info: ../dataAnalsis/Z_v_MAF_DD0.png used on input line 264.
+Package pdftex.def Info: ../dataAnalsis/Z_v_MAF_DD0.png used on input line 276.
 
 (pdftex.def)             Requested size: 257.607pt x 515.21399pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [11 <./Plots/recombinationRateHistogram.pdf>] [12 <../dataAnalsis/Z_v_MAF_DD0.
-png>]
+ [11 <./Plots/recombinationRateHistogram.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 292--293
+
+ []
+
+[12 <../dataAnalsis/Z_v_MAF_DD0.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 294--295
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 297--298
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 299--300
+
+ []
+
 [13]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [14]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 324.
+               Default added (so using `tbp') on input line 336.
 
 
-Overfull \hbox (30.78603pt too wide) in paragraph at lines 327--338
+Overfull \hbox (30.78603pt too wide) in paragraph at lines 339--350
 [][] 
  []
 
 
-<../SimulationStudy/directionalSelection/SummaryStats.png, id=136, 2409.0pt x 1
+<../SimulationStudy/directionalSelection/SummaryStats.png, id=129, 2409.0pt x 1
 505.625pt>
 File: ../SimulationStudy/directionalSelection/SummaryStats.png Graphic file (ty
 pe png)
  <use ../SimulationStudy/directionalSelection/SummaryStats.png>
 Package pdftex.def Info: ../SimulationStudy/directionalSelection/SummaryStats.p
-ng used on input line 343.
+ng used on input line 356.
 (pdftex.def)             Requested size: 524.2841pt x 327.67757pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [14 <../SimulationStudy/directionalSelection/SummaryStats.png>]
-<Plots/PhenotypePlot.png, id=143, 722.7pt x 433.62pt>
+ [15 <../SimulationStudy/directionalSelection/SummaryStats.png>]
+<Plots/PhenotypePlot.png, id=135, 722.7pt x 433.62pt>
 File: Plots/PhenotypePlot.png Graphic file (type png)
 
 <use Plots/PhenotypePlot.png>
-Package pdftex.def Info: Plots/PhenotypePlot.png used on input line 352.
+Package pdftex.def Info: Plots/PhenotypePlot.png used on input line 365.
 (pdftex.def)             Requested size: 524.30247pt x 314.58148pt.
 
-<Plots/effectSizeDistributionPlot.pdf, id=144, 867.24pt x 361.35pt>
+<Plots/effectSizeDistributionPlot.pdf, id=136, 867.24pt x 361.35pt>
 File: Plots/effectSizeDistributionPlot.pdf Graphic file (type pdf)
 
 <use Plots/effectSizeDistributionPlot.pdf>
 Package pdftex.def Info: Plots/effectSizeDistributionPlot.pdf used on input lin
-e 361.
+e 374.
 (pdftex.def)             Requested size: 524.31793pt x 218.46579pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [15 <./Plots/PhenotypePlot.png (PNG copy)> <./Plots/effectSizeDistributionPlot
+ [16 <./Plots/PhenotypePlot.png (PNG copy)> <./Plots/effectSizeDistributionPlot
 .pdf>]
-<Plots/all_maps_plot_demo.pdf, id=156, 722.7pt x 1517.67pt>
+<Plots/all_maps_plot_demo.pdf, id=148, 722.7pt x 1517.67pt>
 File: Plots/all_maps_plot_demo.pdf Graphic file (type pdf)
 
 <use Plots/all_maps_plot_demo.pdf>
-Package pdftex.def Info: Plots/all_maps_plot_demo.pdf used on input line 369.
+Package pdftex.def Info: Plots/all_maps_plot_demo.pdf used on input line 382.
 (pdftex.def)             Requested size: 294.41219pt x 618.26878pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [16 <./Plots/all_maps_plot_demo.pdf>]
-<Plots/SNP_number.pdf, id=178, 1011.78pt x 361.35pt>
+ [17 <./Plots/all_maps_plot_demo.pdf>]
+<Plots/SNP_number.pdf, id=170, 1011.78pt x 361.35pt>
 File: Plots/SNP_number.pdf Graphic file (type pdf)
 
 <use Plots/SNP_number.pdf>
-Package pdftex.def Info: Plots/SNP_number.pdf used on input line 378.
+Package pdftex.def Info: Plots/SNP_number.pdf used on input line 391.
 (pdftex.def)             Requested size: 524.295pt x 187.25246pt.
  
 AED: lastpage setting LastPage
-[17 <./Plots/SNP_number.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 386.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 386.
- (./writeUp.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 386.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 386.
+[18 <./Plots/SNP_number.pdf>] [19 <./Plots/neutralResults_histogram.pdf>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 399.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 399.
+
+(./writeUp.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 399.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 399.
 Package rerunfilecheck Info: File `writeUp.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1855,16 +1956,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 386.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 399.
  ) 
 Here is how much of TeX's memory you used:
- 24254 strings out of 493117
- 426867 string characters out of 6135432
- 544055 words of memory out of 5000000
- 26911 multiletter control sequences out of 15000+600000
- 97857 words of font info for 266 fonts, out of 8000000 for 9000
+ 24268 strings out of 493117
+ 426753 string characters out of 6135432
+ 544047 words of memory out of 5000000
+ 26886 multiletter control sequences out of 15000+600000
+ 94673 words of font info for 283 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,12n,56p,1739b,370s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,12n,56p,1802b,370s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -1873,20 +1974,18 @@ live/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texl
 ive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texliv
 e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2014/texmf-dist/fonts/type1/public/mathpazo/fplmb.pfb></usr/local/texlive/2014
-/texmf-dist/fonts/type1/public/mathpazo/fplmbi.pfb></usr/local/texlive/2014/tex
-mf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/local/texlive/2014/texmf-di
-st/fonts/type1/public/mathpazo/fplmri.pfb></usr/local/texlive/2014/texmf-dist/f
-onts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
-pe1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/ur
-w/helvetic/uhvr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/helve
-tic/uhvro8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palatino/up
-lb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplbi8a.p
-fb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></us
-r/local/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on writeUp.pdf (17 pages, 2391500 bytes).
+/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/local/texlive/2014/texm
+f-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/local/texlive/2014/texmf-di
+st/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2014/texmf-dist/font
+s/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type
+1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/h
+elvetic/uhvro8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palatin
+o/uplb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplr8
+a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on writeUp.pdf (19 pages, 2388688 bytes).
 PDF statistics:
- 246 PDF objects out of 1000 (max. 8388607)
- 184 compressed objects within 2 object streams
- 34 named destinations out of 1000 (max. 500000)
- 49225 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 248 PDF objects out of 1000 (max. 8388607)
+ 186 compressed objects within 2 object streams
+ 36 named destinations out of 1000 (max. 500000)
+ 47689 words of extra memory for PDF output out of 51595 (max. 10000000)
 
