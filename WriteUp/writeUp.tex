@@ -3,6 +3,8 @@
 \usepackage[normalem]{ulem}
 \usepackage{float}
 \usepackage{setspace}
+\usepackage{color,soul}
+
 %\doublespacing
 
 \useunder{\uline}{\ul}{}
@@ -176,7 +178,7 @@ When analysing directional selection results, we classified genes as being invol
 
 \subsection{Analysis of data from Lodgepole pine}
 
-We re-analysed a population genomic dataset collected for lodgepole pine distributed across the North West of North America. The data were initially generated and described by Yeaman et al (2016). Initially, the top-candidate test was applied to this data. Yeaman et al (2016) analysed the data using both Spearman's $\rho$ and the population structure corrected GEA BayEnvfa
+We re-analysed a population genomic dataset for lodgepole pine distributed across the North West of North America collected and described by Yeaman et al (2016). Initially, the top-candidate test was applied to this data. Yeaman et al (2016) analysed the data using both Spearman's $\rho$ and the population structure corrected GEA BayEnvfa
 calculated $Z_W$ scores for the same genes analysed by Yeaman et al (2016). Data were accessed from the Dryad repository associated with Yeaman et al (2016) (DRYADLINK)
 
 \subsection{Data Availability}
@@ -197,15 +199,17 @@ The simulation configuration files and code to perform the analysis of simulated
 
 \subsection{Simulations of local adaptation}
 
-We simulated meta-populations distributed in a large spatially extended population. Our stepping-stone populations exhibited strong signals of isolation-by-distance, and $F_{ST}$ was greatest between the most physically distant demes.  
+We simulated meta-populations inhabiting and adapting to heterogeneous environments. We modelled the population structure in our simulations on an idealised conifer species. In conifer species, there is strong isolation-by-distance and mean $F_{ST}$ has been reported to be 0.10< in several species (Mimura and Aitken 2007; Mosca et al 2013; Toth et al 2019). As expected for a population with limited dispersal, our simulated stepping-stone populations exhibited a strong pattern of isolation-by-distance. Pairwise $F_{ST}$ increased with distance between distant demes. Across the whole population, there was a mean $F_{ST}$ of 0.042.
 
-Patterns of linkage disequilibrium within population 
+It has been reported that linkage disequilibrium decays rapidly in conifer species
+Rapid decay of linkage disequilibrium has been reported for several conifer species
+We examined the decay of LD between pairs of SNPs located in the same gene. LD decayed rapidly, with SNPs that were 500bp (check this again) having, on average, half the LD of immediately adjacent SNPs (Figure \ref{fig:summaryStats}). Linkage disequilibrium (LD) decayed to a background level of around 0.1  within demes in our simulations. This pattern of LD decay is similar to other organisms that have been examined, for example \textit{Drosophila simulans} (Langley et al 2011 - double check).
 
-
+Our simulated populations exhibited local adaptation to the various environment maps that we generated. When assuming directional selection, an average of \hl{ 4.1, 5.0 and 3.2} genes contained genetic variants that established and contributed to local adaptation when assuming the \textit{BC map}, the \textit{Gradient} map and the \textit{Truncated} map, respectively. In our simulations assuming stabilising selection, individuals' phenotypes closely matched the phenoypic optima of their local environment (Figure \ref{fig:localAdaptationPhenotypes}). The average numbers of genes contributing to local adaptation in these simulations were \hl{ 4.1, 5.0 and 3.2} when assuming the \textit{BC map}, the \textit{Gradient} map and the \textit{Truncated} map, respectively.
 
 \subsection{Statistical properties of window-based GEAs}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \includegraphics[width=0.6\linewidth,keepaspectratio]{Plots/neutralResults_histogram.pdf} 
 
   \caption{Density histograms of WZA scores for three cases. A) An finite island population, $Z_W$ scores were calculated using uncorrected $p$-values obtained from Kendall's $\tau$. B)  The BC-map, $Z_W$ scores were calculated using uncorrected $p$-values obtained from Kendall's $\tau$. C). Inset in each panel is a histogram focussing on the upper tail of the $Z_W$ distribution.}
@@ -213,6 +217,9 @@ Patterns of linkage disequilibrium within population
   \label{fig:NeutralHistograms}
 \end{figure}
 
+The weighted-Z test combines information from tests that are assumed to be statistically independent. Under the null hypothesis that all tests are non-significant, the distribution of the $Z_W$ is expected to be the standard normal distribution (i.e. with a mean of 0 and a standard deviation of 1). In this study, we propose using the weighted-Z test to aggregate results for GEA studies applied to genome-wide SNPs. Tightly linked SNPs obviously violate the assumption of statistical independence, so the distribution of $Z_W$ scores from the WZA may not be normal. 
+
+To examine the distribution of $Z_W$ for a neutrally evolving metapopulation with no spatial structure, we simulated the  
 To assess the statistical properties of the WZA and the top-candidate test, we first performed GEA analyses on populations structured according to an island model. While highly unrealistic, analysing this model allowed us to determine the statistical properties of the WZA and the top-candidate test without the need to correct for the confounding effects of population structure. 
 
 The distribution of $Z_W$ scores obtained for populations evolving under strict neutrality was very close to the expectation of the standard normal distribution. The mean $Z_W$ was 0.00X and the variance was 1.XXX. Figure \ref{fig:normalIsland}A shows the distribution of $Z_W$ scores obtained when analysing a sample consisting of 50 individuals from 40 demes (2,000 total).  However, simulations modelling local adaptation in the island model resulted in a skewed distribution of $Z_W$ scores for neutral genes. Figure \ref{fig:normalIsland}C shows that adaptation elsewhere in the genome can generate a background level of correlation with the environment, causing the mean $Z_W$ to be greater than 0. Indeed, the mean $Z_W$ was 0.00X and the variance was 1.XXX in this case. This isolation-by-adaptation means that it is not possible to convert $Z_W$ scores to parametric \textit{p}-values. 
