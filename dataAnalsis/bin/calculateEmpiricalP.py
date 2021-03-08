@@ -37,7 +37,7 @@ def main():
 
 			type = str, 
 
-			help = "[OPTIONAL] If you want to analyse just a single environment, give it here")
+			help = "[OPTIONAL] If you want to analyse just a single environment, give it here. The default is to run the analysis on all CoAdapTree envs")
 
 	parser.add_argument("--maf", 
 
@@ -55,8 +55,10 @@ def main():
 
 ## For all environmental variables:
 ## MAT MWMT MCMT TD MAP MSP AHM SHM DD_0 DDS NFFD bFFP FFP PAS EMT EXT Eref CMD
-
-	envs =["MAT","MWMT","MCMT","TD",
+	if args.env:	
+		envs = [args.env]
+	else:
+		envs =["MAT","MWMT","MCMT","TD",
 			"MAP","MSP","AHM","SHM",
 			"DD_0","DD5","NFFD","bFFP",
 			"FFP","PAS","EMT","EXT","Eref","CMD"]
@@ -68,8 +70,8 @@ def main():
 ### This is going to use a LOT of memory and might not be feasible in some cases
 	big_CSV = pd.read_csv( args.correlations , sep  = "\t")
 
-#	for environment in envs:
-	for environment in ["AHM"]:
+	for environment in envs:
+#	for environment in ["AHM"]:
 	## Extract the SNPs corresponding to the environment in question
 		temp = big_CSV[big_CSV["env"] == environment].copy()
 	## Apply a MAF 
@@ -78,6 +80,10 @@ def main():
 	
 	## Calculate the empirical p-values
 		temp["empirical_pvalue"] = temp["pvalue"].rank()/temp.shape[0]
+	## If there were no SNPs corresponding to the current env then don't write a file
+		if temp.shape[0] == 0:
+			continue
+		print(temp.shape)
 		temp.to_csv( environment + "_empiricalP_" + args.correlations, index = False, sep = '\t')
 
 main()
