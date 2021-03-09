@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2014)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: writeUp.aux
+The style file: genetics.bst
+Database file #1: references.bib.bib
+Warning--I didn't find a database entry for "Haller2019"
+Warning--empty year in Walsh; set to ????
+Warning--empty publisher in Walsh
+You've used 26 entries,
+            2762 wiz_defined-function locations,
+            812 strings with 11002 characters,
+and the built_in function-call counts, 15972 in all, are:
+= -- 1399
+> -- 1168
+< -- 12
++ -- 440
+- -- 352
+* -- 1745
+:= -- 2719
+add.period$ -- 50
+call.type$ -- 26
+change.case$ -- 260
+chr.to.int$ -- 26
+cite$ -- 28
+duplicate$ -- 602
+empty$ -- 924
+format.name$ -- 392
+if$ -- 3064
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 27
+newline$ -- 81
+num.names$ -- 104
+pop$ -- 230
+preamble$ -- 1
+purify$ -- 236
+quote$ -- 0
+skip$ -- 389
+stack$ -- 0
+substring$ -- 856
+swap$ -- 209
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 228
+warning$ -- 2
+while$ -- 116
+width$ -- 0
+write$ -- 284
+(There were 3 warnings)
