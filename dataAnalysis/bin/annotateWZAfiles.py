@@ -35,9 +35,9 @@ def main():
 	
 # This dict stores the position index of each species in the annotation file
 	species_index = {}
-## It is assumed that the annotation file has the following structure:
-#Df	Is	Pa	Pi
-	species_list = [ "Pi" , "Is", "Pa", "Pi"]
+## It is assumed that the annotation file has the following structure
+#Df	Pa	Pi
+	species_list = [ "Df" , "Pa", "Pi"]
 ## Orthogroup_name     species_1      species_2      species_3      ... species_k
 
 	for focal_species in species_list:
