@@ -22,4 +22,6 @@ I ran the BayPass analysis on Compute Canada servers, here's an example of how I
       -outprefix BC_Map_sampled/${SLURM_ARRAY_TASK_ID}_0.5_192_d40n50_i10000.bayPass
 ```
 
-When I was working on the server, I loaded the data in using a different architechture than I used for this repository, so, again, the paths would need to be corrected to run on another machine. 
+When I was working on the server, I loaded the data in using a different architecture than I used for this repository, so, again, the paths would need to be corrected to run on another machine. 
+
+The shell scripts present in this directory
