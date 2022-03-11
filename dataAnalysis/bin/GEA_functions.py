@@ -3,12 +3,15 @@ import scipy.stats
 import numpy as np
 from GEA_functions import *
 
-def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z"):
+def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z", SNP_count = 1e6):
 ## gea - the name of the pandas dataFrame with the gea results
 ## statistic - the name of the column with your p-values
 ## MAF_filter - the lowest MAF you wil tolerate
 ## varName - the column name for the weigted Z results
 ## NOTE, this function assumes that the DataFrame has a column named pbar_qbar
+
+	if gea.shape[0] > SNP_count:
+		gea = gea.sample(n=int(SNP_count), replace=False, random_state=1)
 
 ## Very small p-values throw Infinities when converted to z_scores, so I convert them to small numbers (i.e. 1e-15)
 

@@ -106,7 +106,7 @@ def correlationThreshold( corData, targetEnv, percentile_threshold = 99.9):
 	pValues = []
 	with open( corData ) as cor:
 		for c in cor:
-			if c.startswith("snp"):continue
+			if c.startswith("snp") or c.startswith("contig"):continue
 			currentLine = corLine(c)
 			if currentLine.env != targetEnv: continue
 			else:
@@ -170,6 +170,18 @@ def main():
 			action = "store_true", 
 
 			help = "[OPTIONAL] Give this flag if the analysis files are in BED format. Otherwise the script assumes GFF format")
+
+	parser.add_argument("--sample_snps", 
+
+			required = False,
+
+			dest = "sample_snps",
+
+			type = int,
+
+			help = "[OPTIONAL] Give the number of SNPs you want to downsample to. Give -1 if you want to use the median number of SNPs. Note that calculating the median within the script is slow, so you may want to run a dummy analysis, get the median number of SNPs then use that explicitly.",
+			default = 0)
+
 
 	args = parser.parse_args()
 	
@@ -238,8 +250,26 @@ def main():
 			return
 		print("99th percentile:",threshold_99th) 
 
+		if args.sample_snps == -1:
+			
+## Get a list of the number of SNPs per contig
+			num_SNP_list = np.array([contigSnpTable(SNPs, annotations[annotations["seqname"] == contig]).shape[0] for contig,SNPs in contigGenerator(args.correlations, env)])
+## Calculate the median number of SNPs per gene
+			max_SNP_count = int(np.median(num_SNP_list[num_SNP_list!=0]))
+			print("Using the median number of SNPs as the maximum in each gene:", max_SNP_count)
+
+		elif args.sample_snps == 0:
+			max_SNP_count = int(1e6) # This is just a large number that is never going to be the number of SNPs within a gene
+			print("The maximum number of SNPs in each gene:", max_SNP_count)
+
+		else:
+			max_SNP_count = int(args.sample_snps)
+			print("The maximum number of SNPs in each gene:", max_SNP_count)
+
 
 		print("Analysing:",env)
+
+		
 		
 ## Iterate over contigs spat out by the 
 		for contig,SNPs in contigGenerator(args.correlations, env):
@@ -260,10 +290,10 @@ def main():
 
 
 ## Perform the WZA on the annotations in the contig using parametric ps
-			wza_pVal = WZA(contigDF, "pVal", varName = "Z_p")
+			wza_pVal = WZA(contigDF, "pVal", varName = "Z_p", SNP_count = max_SNP_count)
 
 ## Perform the WZA on the annotations in the contig using empirical ps
-			wza_emp_pVal = WZA(contigDF, "empirical_pVal", varName = "Z_empP")
+			wza_emp_pVal = WZA(contigDF, "empirical_pVal", varName = "Z_empP", SNP_count = max_SNP_count)
 
 ## Perform the top-candidate for the annotations in the contig
 			TopCan = top_candidate( contigDF, threshold_99th, 0.01, "pVal", 0.9999, MAF_filter = 0.05 )
@@ -274,6 +304,8 @@ def main():
 			result["contig"] = contig
 
 			result["env"] = env
+
+			result["max_WZA_snps"] = max_SNP_count
 
 			all_contigs.append( result )
 			

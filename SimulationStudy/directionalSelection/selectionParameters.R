@@ -2,8 +2,8 @@
 ######### Directional Selection
 #########
 
-## 40% Fitness difference
-s = 0.0055
+## 90% Fitness difference
+s = 0.0136
 nLoci = 12
 (1+s*-7)^nLoci /(1+s*7)^nLoci 
 

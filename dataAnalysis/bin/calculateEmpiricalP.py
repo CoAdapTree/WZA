@@ -49,9 +49,22 @@ def main():
 
 			help = "[OPTIONAL] If you want to apply a MAF filter specify that here",
 			default = 0)
+
+	parser.add_argument("--split", 
+
+			required = False,
+
+			dest = "split",
+
+			action = "store_true", 
+
+			help = "[OPTIONAL] Give this flag if you want to split the 'snp' column into [contig, pos]")
+
 			
 	args = parser.parse_args()
 	
+	print(args.split)
+
 
 ## For all environmental variables:
 ## MAT MWMT MCMT TD MAP MSP AHM SHM DD_0 DDS NFFD bFFP FFP PAS EMT EXT Eref CMD
@@ -69,7 +82,26 @@ def main():
 	
 ### This is going to use a LOT of memory and might not be feasible in some cases
 	big_CSV = pd.read_csv( args.correlations , sep  = "\t")
+	
+	if args.split:
+		original_order = list(big_CSV)[1:]
 
+	
+# new data frame with split value columns
+		new = big_CSV["snp"].str.split("-", n = 1, expand = True)
+  
+# making separate first name column from new data frame
+		big_CSV["contig"]= new[0]
+  
+# making separate last name column from new data frame
+		big_CSV["pos"]= new[1]
+  
+# Dropping old Name columns
+		big_CSV.drop(columns =["snp"], inplace = True)
+
+		big_CSV = big_CSV[["contig", "pos"]+original_order]
+
+	
 	for environment in envs:
 #	for environment in ["AHM"]:
 	## Extract the SNPs corresponding to the environment in question
@@ -84,6 +116,7 @@ def main():
 		if temp.shape[0] == 0:
 			continue
 		print(temp.shape)
+		print(environment + "_empiricalP_" + args.correlations)
 		temp.to_csv( environment + "_empiricalP_" + args.correlations, index = False, sep = '\t')
 
 main()
