@@ -9,9 +9,10 @@ def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z", SNP_count = 1e6):
 ## MAF_filter - the lowest MAF you wil tolerate
 ## varName - the column name for the weigted Z results
 ## NOTE, this function assumes that the DataFrame has a column named pbar_qbar
-
-	if gea.shape[0] > SNP_count:
-		gea = gea.sample(n=int(SNP_count), replace=False, random_state=1)
+#	print("before sample\n", gea)
+	if SNP_count != 1e6:
+		gea_gby = gea.groupby(["gene"])
+		gea = gea_gby.apply(lambda x: x.sample(n= SNP_count) if len(x)> SNP_count else x).reset_index(drop=True)
 
 ## Very small p-values throw Infinities when converted to z_scores, so I convert them to small numbers (i.e. 1e-15)
 
@@ -21,6 +22,7 @@ def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z", SNP_count = 1e6):
 
 # convert the p-values into 1-sided Z scores (hence the 1 - p-values)
 	gea["z"] = scipy.stats.norm.ppf(1 - np.array( gea[statistic], dtype = float))
+
 ## Apply the MAF filter
 #	gea_filt = gea[ gea["maf"] > MAF_filter ].copy()
 
@@ -30,13 +32,13 @@ def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z", SNP_count = 1e6):
 
 	gea_filt[varName+"_weiZ_num"] = gea_filt["pbar_qbar"] * gea_filt["z"]
 
-	gea_filt[varName+"_weiZ_den"] =  gea_filt["pbar_qbar"]**2 	
+	gea_filt[varName+"_weiZ_den"] =  gea_filt["pbar_qbar"]**2
 
 	numerator = gea_filt.groupby(["gene"])[varName+"_weiZ_num"].sum().to_frame()
 
 	denominator = np.sqrt(gea_filt.groupby(["gene"])[varName+"_weiZ_den"].sum()).to_frame()
 
-## We've calculated the num. and the den., let's make a dataframe that has both 
+## We've calculated the num. and the den., let's make a dataframe that has both
 	weiZ  = pd.concat([numerator,denominator], axis = 1, sort = False)
 
 ## Actually calculate the Z scores for each gene
@@ -73,7 +75,7 @@ def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold,
 	num_SNPs = gea_filt.groupby(["gene"])["hits"].count().to_frame()
 
 ## Make a single DF with the hits and the SNPs
-	TC  = pd.concat([num_hits, num_SNPs], axis = 1, sort = False) 
+	TC  = pd.concat([num_hits, num_SNPs], axis = 1, sort = False)
 
 ## Name the cols
 	TC.columns = ["hits", "SNPs"]

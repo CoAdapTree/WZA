@@ -26,7 +26,7 @@ class corLine:
 
 		MAF = float(dat[5])
 
-		self.pbar_qbar = MAF * (1 - MAF) 
+		self.pbar_qbar = MAF * (1 - MAF)
 
 		self.emp_pVal = float(dat[6])
 
@@ -42,7 +42,7 @@ def contigGenerator(correlationFile, envFilter):
 		for c in cor:
 ## Ignore the headera
 			if c.startswith("snp") or c.startswith("contig"):continue
-			
+
 			currentLine = corLine(c)
 
 			if currentLine.env != envFilter: continue
@@ -98,9 +98,9 @@ def contigSnpTable(snps, contig_dat):
 									"gene_start":gene_start,
 									"gene_end":gene_end})
 
-	return pd.DataFrame(data_for_table)	
-	
-	
+	return pd.DataFrame(data_for_table)
+
+
 def correlationThreshold( corData, targetEnv, percentile_threshold = 99.9):
 ## Make an empty container to dump the pVals into
 	pValues = []
@@ -123,55 +123,55 @@ def main():
 
 	parser = argparse.ArgumentParser(description="")
 
-	parser.add_argument("--correlations", "-c", 
+	parser.add_argument("--correlations", "-c",
 
 			required = True,
 
 			dest = "correlations",
 
-			type = str, 
+			type = str,
 
 			help = "The file containing the correlations")
 
-	parser.add_argument("--annotations","-a", 
+	parser.add_argument("--annotations","-a",
 
 			required = True,
 
-			dest = "annotations", 
+			dest = "annotations",
 
 			help = "The file of annotations. The script asssumes GFF as default, set the '--bed' flag if using that format")
 
-	parser.add_argument("--output", 
+	parser.add_argument("--output",
 
 			required = True,
 
 			dest = "output",
 
-			type = str, 
+			type = str,
 
 			help = "The name of the output file (the environment will be prepended to the file name so be sure to write to this dir!)")
 
-	parser.add_argument("--env", 
+	parser.add_argument("--env",
 
 			required = False,
 
 			dest = "env",
 
-			type = str, 
+			type = str,
 
 			help = "[OPTIONAL] If you want to analyse just a single environment, give it here")
 
-	parser.add_argument("--bed", 
+	parser.add_argument("--bed",
 
 			required = False,
 
 			dest = "bed",
 
-			action = "store_true", 
+			action = "store_true",
 
 			help = "[OPTIONAL] Give this flag if the analysis files are in BED format. Otherwise the script assumes GFF format")
 
-	parser.add_argument("--sample_snps", 
+	parser.add_argument("--sample_snps",
 
 			required = False,
 
@@ -184,9 +184,9 @@ def main():
 
 
 	args = parser.parse_args()
-	
+
 	if args.bed:
-		annotations = pd.read_csv(args.annotations , 
+		annotations = pd.read_csv(args.annotations ,
 
 					sep = "\t",
 
@@ -202,7 +202,7 @@ def main():
 
 	else:
 ## GFF header from ENSEMBL webpage
-		annotations = pd.read_csv(args.annotations , 
+		annotations = pd.read_csv(args.annotations ,
 
 					sep = "\t",
 
@@ -248,10 +248,10 @@ def main():
 		if threshold_99th == None:
 			print("Something went wrong when identifying the outlier threshold")
 			return
-		print("99th percentile:",threshold_99th) 
+		print("99th percentile:",threshold_99th)
 
 		if args.sample_snps == -1:
-			
+
 ## Get a list of the number of SNPs per contig
 			num_SNP_list = np.array([contigSnpTable(SNPs, annotations[annotations["seqname"] == contig]).shape[0] for contig,SNPs in contigGenerator(args.correlations, env)])
 ## Calculate the median number of SNPs per gene
@@ -269,10 +269,14 @@ def main():
 
 		print("Analysing:",env)
 
-		
-		
-## Iterate over contigs spat out by the 
+
+
+## Iterate over contigs spat out by the
 		for contig,SNPs in contigGenerator(args.correlations, env):
+
+## For testing:
+#			if contig != "jcf7190000000051":continue
+
 ## Grab all the genes present on this contig
 			contigDF = contigSnpTable(SNPs, annotations[annotations["seqname"] == contig])
 		#	print(contigDF)
@@ -285,7 +289,7 @@ def main():
 			position = contigDF.groupby(["gene"])["pos"].mean().to_frame()
 
 			anno_start = contigDF.groupby(["gene"])["gene_start"].mean().to_frame()
-			
+
 			anno_end = contigDF.groupby(["gene"])["gene_end"].mean().to_frame()
 
 
@@ -306,28 +310,27 @@ def main():
 			result["env"] = env
 
 			result["max_WZA_snps"] = max_SNP_count
-
 			all_contigs.append( result )
-			
-		if len( all_contigs ) == 0: continue 
-		
+
+		if len( all_contigs ) == 0: continue
+
 ## Combine all contig-specific dataframes into a single big one
 		outputDF = pd.concat(all_contigs)
-		
+
 ## Get the expected proportion of hits per hit-bearing gene
 		expected = outputDF[outputDF["hits"]!=0]["hits"].sum() / outputDF[outputDF["hits"]!=0]["SNPs"].sum()
 
 		print("expected proportion", expected)
 
 		top_candidate_p = [ scipy.stats.binom_test(h, s, expected, alternative = "greater" ) for h, s in zip(outputDF.hits, outputDF.SNPs)]
-		
-		outputDF["top_candidate_p"] = top_candidate_p 
+
+		outputDF["top_candidate_p"] = top_candidate_p
 
 #		expected_hits = [ scipy.stats.binom.ppf( 0.9999 , s, expected )  for s in outputDF.SNPs]
 
-		outputDF["expected_hits"] =  scipy.stats.binom.ppf( 0.9999 , outputDF.SNPs, expected )  
+		outputDF["expected_hits"] =  scipy.stats.binom.ppf( 0.9999 , outputDF.SNPs, expected )
 
-		
+
 ## Write the dataframe to an output file
 		outputDF.to_csv(env + "_" + args.output,index = False)
 
