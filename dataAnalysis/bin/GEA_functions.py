@@ -3,7 +3,50 @@ import scipy.stats
 import numpy as np
 from GEA_functions import *
 
-def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z", SNP_count = 1e6):
+def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z"):
+## gea - the name of the pandas dataFrame with the gea results
+## statistic - the name of the column with your p-values
+## MAF_filter - the lowest MAF you wil tolerate
+## varName - the column name for the weigted Z results
+## NOTE, this function assumes that the DataFrame has a column named pbar_qbar
+#	print("before sample\n", gea)
+
+## Very small p-values throw Infinities when converted to z_scores, so I convert them to small numbers (i.e. 1e-15)
+
+	gea[statistic] = gea[statistic].clip(lower = 1e-15 )
+
+	gea[statistic] = gea[statistic].replace(1 , 1-1e-3)
+
+# convert the p-values into 1-sided Z scores (hence the 1 - p-values)
+	gea["z_score"] = scipy.stats.norm.ppf(1 - np.array( gea[statistic], dtype = float))
+
+	gea["pbar_qbar"] = gea["MAF"]*(1-gea["MAF"])
+
+## Apply the MAF filter
+	gea_filt = gea[ gea["MAF"] > MAF_filter ].copy()
+
+## Calculate the numerator and the denominator for the WZA
+
+	gea_filt[varName+"_weiZ_num"] = gea_filt["pbar_qbar"] * gea_filt["z_score"]
+
+	gea_filt[varName+"_weiZ_den"] =  gea_filt["pbar_qbar"]**2
+
+	numerator = gea_filt[varName+"_weiZ_num"].sum()
+
+	denominator = np.sqrt(gea_filt[varName+"_weiZ_den"].sum())
+
+## We've calculated the num. and the den., let's make a dataframe that has both
+	weiZ  = numerator/denominator
+
+## Deprecated
+## One might be interested in calculating a p_value from the Z-scores (though this only works if the data are normal, which they won't be if there's populations structure).
+##	weiZ[varName+"_hits"] = (weiZ[varName] > scipy.stats.norm.ppf(1 - 0.05/50)).astype(int)
+
+## Return the final dataframe
+	return weiZ
+
+
+def WZA_group( gea , statistic , MAF_filter = 0.05, varName = "Z", SNP_count = 1e6):
 ## gea - the name of the pandas dataFrame with the gea results
 ## statistic - the name of the column with your p-values
 ## MAF_filter - the lowest MAF you wil tolerate

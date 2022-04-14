@@ -108,13 +108,16 @@ def correlationThreshold( corData, targetEnv, percentile_threshold = 99.9):
 		for c in cor:
 			if c.startswith("snp") or c.startswith("contig"):continue
 			currentLine = corLine(c)
+#			print( currentLine.pVal )
 			if currentLine.env != targetEnv: continue
 			else:
 				pValues.append(currentLine.pVal)
+#	print( pValues )
 	if len(pValues) == 0:
 		return None
 	else:
-		return( 1 -np.percentile( 1 - np.array(pValues), percentile_threshold ) )
+		return( 1 - np.percentile( 1 - np.array(pValues), percentile_threshold ) )
+#		return( np.percentile( np.array(pValues), 100-percentile_threshold ) )
 
 
 def main():
@@ -182,6 +185,16 @@ def main():
 			help = "[OPTIONAL] Give the number of SNPs you want to downsample to. Give -1 if you want to use the median number of SNPs. Note that calculating the median within the script is slow, so you may want to run a dummy analysis, get the median number of SNPs then use that explicitly.",
 			default = 0)
 
+	parser.add_argument("--resamples",
+
+			required = False,
+
+			dest = "resamples",
+
+			type = int,
+
+			help = "[OPTIONAL] Give the number of times you want to resample WZA scores when the number of SNPs exceeds the sample_snps threshold. [100]",
+			default = 100)
 
 	args = parser.parse_args()
 
@@ -230,7 +243,8 @@ def main():
 	envs =["MAT","MWMT","MCMT","TD",
 			"MAP","MSP","AHM","SHM",
 			"DD_0","DD5","NFFD","bFFP",
-			"FFP","PAS","EMT","EXT","Eref","CMD"]
+			"FFP","PAS","EMT","EXT","Eref","CMD",
+			"Latitude", "Elevation"]
 ## If you specify just a single environment (which is recommended for parallelisation)
 	if args.env:
 ## Make sure that the environment specified is actually valid
@@ -245,10 +259,16 @@ def main():
 
 ## Now let's calculate the outlier threshold (for the TC test) from the data - Make sure it's a percentile!
 		threshold_99th = correlationThreshold( args.correlations, env, percentile_threshold = 99)
+		threshold_95th = correlationThreshold( args.correlations, env, percentile_threshold = 95)
+		threshold_90th = correlationThreshold( args.correlations, env, percentile_threshold = 90)
+		threshold_50th = correlationThreshold( args.correlations, env, percentile_threshold = 50)
 		if threshold_99th == None:
 			print("Something went wrong when identifying the outlier threshold")
 			return
 		print("99th percentile:",threshold_99th)
+		print("95th percentile:",threshold_95th)
+		print("90th percentile:",threshold_90th)
+		print("50th percentile:",threshold_50th)
 
 		if args.sample_snps == -1:
 
@@ -273,12 +293,11 @@ def main():
 
 ## Iterate over contigs spat out by the
 		for contig,SNPs in contigGenerator(args.correlations, env):
-
 ## For testing:
 #			if contig != "jcf7190000000051":continue
-
 ## Grab all the genes present on this contig
 			contigDF = contigSnpTable(SNPs, annotations[annotations["seqname"] == contig])
+
 		#	print(contigDF)
 ## If there are no annotations on the current contig, move to the next
 			if contigDF.shape == (0,0):
@@ -295,15 +314,25 @@ def main():
 
 ## Perform the WZA on the annotations in the contig using parametric ps
 			wza_pVal = WZA(contigDF, "pVal", varName = "Z_p", SNP_count = max_SNP_count)
-
+#			print(wza_pVal)
 ## Perform the WZA on the annotations in the contig using empirical ps
-			wza_emp_pVal = WZA(contigDF, "empirical_pVal", varName = "Z_empP", SNP_count = max_SNP_count)
+#			for k in range(resamples):
+#				print(k)
+			wza_emp_pVal_samples = [WZA(contigDF, "empirical_pVal", varName = "Z_empP", SNP_count = max_SNP_count) for  k in range(args.resamples)]
+
+			wza_concat = pd.concat( wza_emp_pVal_samples )
+
+			wza_by_row_index = wza_concat.groupby(wza_concat.index)
+
+			wza_df_means = wza_by_row_index.mean()
+
+			print( wza_df_means )
 
 ## Perform the top-candidate for the annotations in the contig
 			TopCan = top_candidate( contigDF, threshold_99th, 0.01, "pVal", 0.9999, MAF_filter = 0.05 )
 
 ## Combine the results
-			result = pd.concat([ position, wza_pVal, wza_emp_pVal, TopCan, anno_start, anno_end] , axis = 1, sort = True ).reset_index()
+			result = pd.concat([ position, wza_pVal, wza_df_means, TopCan, anno_start, anno_end] , axis = 1, sort = True ).reset_index()
 
 			result["contig"] = contig
 
@@ -311,6 +340,8 @@ def main():
 
 			result["max_WZA_snps"] = max_SNP_count
 			all_contigs.append( result )
+
+#			input("\nPress Enter to continue...")
 
 		if len( all_contigs ) == 0: continue
 
