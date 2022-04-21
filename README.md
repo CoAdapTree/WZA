@@ -31,3 +31,4 @@ Going back and forth from servers to my local machine, there was a lot of tweaki
 During the course of this project I referred to the Gradient map as the "cline" map. Lots of files and scripts use this nomenclature. However, during the writing process we decided that "cline" is perhaps too loaded a term to use, so we went with "gradient" instead.
 
 I typically use English (UK) spelling, but sometimes just let spell-checkers do their thing so there is a bit of a combination of UK and US spellings of things.
+...
