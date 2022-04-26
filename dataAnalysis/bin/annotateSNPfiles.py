@@ -42,8 +42,8 @@ def main():
         "end",
         "attribute"])
         ## Add 1 to the positions to make correct for 0-based BedTools
-        annotations["start"] +=1
-
+#        annotations["start"] +=1
+#   Commented out because Pooja did not make the BED files 0-based
     else:
         ## GFF header from ENSEMBL webpage
         annotations = pd.read_csv(args.annotations ,
@@ -60,12 +60,13 @@ def main():
 
 
 
-    header = ["contig","pos","env","rho","pVal","MAF","emp_pVal"]
+#    header = ["contig","pos","env","rho","pVal","MAF","emp_pVal"]
     csv = pd.read_csv(args.correlations,
-                        header = None,
+#                        header = None,
                         delim_whitespace=True,
-                        names = header,
+#                        names = header,
                         index_col=False)
+    print(csv)
 ## Group the SNP DF by contig
     csv_gb = csv.groupby('contig')
 
@@ -74,6 +75,12 @@ def main():
     for i in csv_gb:
     ## Grab the chunk of the annotation dict that matches
         relevant_annotations = annotations[annotations["seqname"] == i[0]].copy()
+#        if relevant_annotations.shape[0] !=0:
+#            print(relevant_annotations)
+#            print(i[0])
+#            print(i[1])
+#            print(relevant_annotations)
+#            print()
 
         SNP_df = i[1].copy()
         ii = pd.IntervalIndex.from_arrays(relevant_annotations['start'], relevant_annotations['end'],

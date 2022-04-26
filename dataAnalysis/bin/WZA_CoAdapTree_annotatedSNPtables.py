@@ -62,6 +62,9 @@ def main():
 
     csv = pd.read_csv(args.correlations, sep = "\t")
 
+    csv.columns = ["contig","pos","env","rho","pVal","MAF","emp_pVal", "attribute"]
+
+
     if args.verbose:
         print("here's a peek at the input data")
         print(csv)
@@ -115,7 +118,7 @@ def main():
 #        print(wza_emp_pVal)
 
         if args.verbose:
-            print("gene:", count )
+            print("gene #:", count, "\tgene:", gene )
 
         output = {"contig": list(gene_df.contig)[0],
                     "env":list(gene_df.env)[0],
