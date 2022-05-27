@@ -3,11 +3,10 @@ import scipy.stats
 import numpy as np
 from GEA_functions import *
 
-def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z"):
+def WZA( gea , statistic , MAF_filter = 0.05):
 ## gea - the name of the pandas dataFrame with the gea results
 ## statistic - the name of the column with your p-values
 ## MAF_filter - the lowest MAF you wil tolerate
-## varName - the column name for the weigted Z results
 ## NOTE, this function assumes that the DataFrame has a column named pbar_qbar
 #	print("before sample\n", gea)
 
@@ -27,13 +26,13 @@ def WZA( gea , statistic , MAF_filter = 0.05, varName = "Z"):
 
 ## Calculate the numerator and the denominator for the WZA
 
-	gea_filt[varName+"_weiZ_num"] = gea_filt["pbar_qbar"] * gea_filt["z_score"]
+	gea_filt["weiZ_num"] = gea_filt["pbar_qbar"] * gea_filt["z_score"]
 
-	gea_filt[varName+"_weiZ_den"] =  gea_filt["pbar_qbar"]**2
+	gea_filt["weiZ_den"] =  gea_filt["pbar_qbar"]**2
 
-	numerator = gea_filt[varName+"_weiZ_num"].sum()
+	numerator = gea_filt["weiZ_num"].sum()
 
-	denominator = np.sqrt(gea_filt[varName+"_weiZ_den"].sum())
+	denominator = np.sqrt(gea_filt["weiZ_den"].sum())
 
 ## We've calculated the num. and the den., let's make a dataframe that has both
 	weiZ  = numerator/denominator
@@ -95,9 +94,28 @@ def WZA_group( gea , statistic , MAF_filter = 0.05, varName = "Z", SNP_count = 1
 	return weiZ
 
 
-## A function for performing the top-candidate test
 
-def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold, MAF_filter = 0.05):
+def top_candidate( gea, thresh):
+
+## gea - the name of the pandas dataFrame with the gea results
+## thresh - the p_value threshold for determining hits
+## MAF_filter - the lowest MAF you wil tolerate
+## prop_hits - the average probility of getting a hit - this should be the quantile threshold
+##top_candidate_threshold - the probability point for calculating the expected number of genes
+## Identifty the hits
+	hits = ( gea["pVal"] < thresh ).sum()
+
+	snps = gea.shape[0]
+
+	top_candidate_p = scipy.stats.binom_test(hits, snps, thresh, alternative = "greater" ) 
+
+
+	return top_candidate_p, hits
+
+
+## A function for performing the top-candidate test on grouped dataframes
+
+def top_candidate_group( gea, thresh, threshQuant, statistic, top_candidate_threshold, MAF_filter = 0.05):
 
 ## gea - the name of the pandas dataFrame with the gea results
 ## thresh - the p_value threshold for determining hits
@@ -125,8 +143,6 @@ def top_candidate( gea, thresh, threshQuant, statistic, top_candidate_threshold,
 
 	return(TC)
 
-## Init an empty vector for p_values (the top-candidate index)
-	p_vals = []
 
 ### Init an empty vector for expected hits at the "top-candidate" threshold
 #	expectedHits = []

@@ -25,11 +25,10 @@ class corLine:
 
 		MAF =  1 - float(dat[13])
 
-		self.pbar_qbar = MAF * (1 - MAF) 
+		self.pbar_qbar = MAF * (1 - MAF)
 
 ## A generator function to spit out the consecutive lines for the contig
 def contigGenerator(correlationFile, envFilter):
-
 
 	current_contig = ""
 
@@ -39,7 +38,7 @@ def contigGenerator(correlationFile, envFilter):
 		for c in cor:
 ## Ignore the header
 			if c.startswith("X.annotation"):continue
-			
+
 			currentLine = corLine(c, envFilter)
 
 			if currentLine.contig != current_contig:
@@ -69,16 +68,16 @@ def contigSnpTable(snps):
 	data_for_table = []
 
 	for s in snps:
-		
+
 # 		gene_bool = (s.pos>=contig_dat.start)&(s.pos<=contig_dat.end)
-# 
+#
 # 		if sum(gene_bool) == 0:continue
-# 
+#
 # 		gene_name =s":".join(list(contig_dat.attribute[gene_bool]))
 # 		gene_start = list(contig_dat.start[gene_bool] )[0]
-# 
+#
 # 		gene_end = list( contig_dat.end[gene_bool] )[0]
-# 
+#
 # 		if sum(gene_bool) > 1:
 # 			print("more than one gene overlapping with SNP:", s.contig, s.pos)
 
@@ -89,9 +88,9 @@ def contigSnpTable(snps):
 									"pbar_qbar":s.pbar_qbar,
 									"gene":s.contig})
 
-	return pd.DataFrame(data_for_table)	
-	
-	
+	return pd.DataFrame(data_for_table)
+
+
 def correlationThreshold( corData, targetEnv, percentile_threshold = 99.9):
 ## Make an empty container to dump the pVals into
 	pValues = []
@@ -113,59 +112,57 @@ def main():
 
 	parser = argparse.ArgumentParser(description="")
 
-	parser.add_argument("--correlations", "-c", 
+	parser.add_argument("--correlations", "-c",
 
 			required = True,
 
 			dest = "correlations",
 
-			type = str, 
+			type = str,
 
 			help = "The file containing the correlations")
 
-	parser.add_argument("--output", 
+	parser.add_argument("--output",
 
 			required = True,
 
 			dest = "output",
 
-			type = str, 
+			type = str,
 
 			help = "The name of the output file (the environment will be prepended to the file name so be sure to write to this dir!)")
 
-	parser.add_argument("--env", 
+	parser.add_argument("--env",
 
 			required = False,
 
 			dest = "env",
 
-			type = str, 
+			type = str,
 
 			help = "If you want to analyse just a single environment, give it here [DD_0]",
-			
+
 			default = "DD_0")
-			
-<<<<<<< HEAD
-	parser.add_argument("--empirical_p", 
+
+	parser.add_argument("--empirical_p",
 
 			required = False,
 
 			dest = "empirical_p",
 
-			action = "store_true", 
+			action = "store_true",
 
 			help = "[OPTIONAL] Give this flag if you want to analyse empirical p-values that have been appended to the dataframe")
-=======
-	parser.add_argument("--bay", 
+
+	parser.add_argument("--bay",
 
 			required = False,
 
 			dest = "bay",
 
-			action = "store_true", 
+			action = "store_true",
 
 			help = "[OPTIONAL] Give this flag if the analysis files are BayesFactors from bayEnv.")
->>>>>>> origin/master
 
 	args = parser.parse_args()
 
@@ -175,7 +172,7 @@ def main():
 	adapTreeEnvs = ["LAT"	,"LONG"	,"ELEVATION"	,"MAT"	,"MWMT"	,"MCMT"	,"TD"	,"MAP"	,"MSP"	,"AHM"	,"SHM"	,"DD_0"	,"DD5"	,"NFFD"	,"bFFP"	,"eFFP"	,"FFP"	,"PAS"	,"EMT"	,"EXT"	,"Eref"	,"CMD"	,"Budset_p"	,"Budbreak_p"	,"Height_season_1_p"	,"Height_season_2_p"	,"Diameter_p"	,"Shoot_weight_p"	,"Root_weight_p"	,"Max_growth_rate_p"	,"Linear_growth_days_p"	,"X5_growth_complete_days_p"	,"X95_growth_complete_days_p"	,"X5_95_growth_days_p"	,"Fall_cold_injury_p"	,"Winter_cold_injury_p"	,"Spring_cold_injury_p"	,"root_wt_shoot_wt_p"	,"root_wt_shoot_wt_p_1"]
 
 	adapTreeEnvDict = {}
-	
+
 	for i in range(len(adapTreeEnvs)):
 		adapTreeEnvDict[adapTreeEnvs[i]] = i + 32 ## to adjust for the length of the adaptree SNP table files
 
@@ -189,34 +186,26 @@ def main():
 
 ## We're going to analyse each env. separately
 	for env in envs:
-<<<<<<< HEAD
 ## If you've made the file of empirical ps, only analyse the last column
 		if args.empirical_p:
-=======
-		if args.bay:
->>>>>>> origin/master
 			envIndex = -1
-		else:	
+		else:
 			envIndex = adapTreeEnvDict[env]
 		all_contigs = []
 
 ## Now let's calculate the outlier threshold (for the TC test) from the data - Make sure it's a percentile!
 		threshold_99th = correlationThreshold( args.correlations, envIndex, percentile_threshold = 99)
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 		if threshold_99th == None:
 			print("Something went wrong when identifying the outlier threshold")
 			return
-		print("99th percentile:",threshold_99th) 
+		print("99th percentile:",threshold_99th)
 
 
 		print("Analysing:",env)
-		
+
 		count = 0
-		
-<<<<<<< HEAD
+
 ## Iterate over contigs spat out by the contig generator
 		for contig,SNPs in contigGenerator(args.correlations, envIndex):
 			count += 1
@@ -224,17 +213,9 @@ def main():
 
 ## Grab all the genes present on this contig
 			contigDF = contigSnpTable(SNPs)
-			print(contig, count)
-=======
-## Iterate over contigs spat out by the 
-		for contig,SNPs in contigGenerator(args.correlations, envIndex):
-			count += 1
-			print(contig, count)
-			if count ==100: break
 
-## Grab all the genes present on this contig
-			contigDF = contigSnpTable(SNPs)
->>>>>>> origin/master
+			print(contig, count)
+
 
 # Remove all NAs from the SNP set
 			contigDF  = contigDF[contigDF["pVal"]!="NA"]
@@ -246,7 +227,7 @@ def main():
 
 			position = contigDF.groupby(["gene"])["pos"].mean().to_frame()
 
-			
+
 ## Perform the WZA on the annotations in the contig
 			wza = WZA(contigDF, "pVal")
 ## Perform the top-candidate for the annotations in the contig
@@ -262,10 +243,10 @@ def main():
 
 			if count%1000 == 0:
 				print( count,"contigs analysed")
-			
-			
-		if len( all_contigs ) == 0: continue 
-		
+
+
+		if len( all_contigs ) == 0: continue
+
 ## Combine all contig-specific dataframes into a single big one
 		outputDF = pd.concat(all_contigs)
 
@@ -274,15 +255,15 @@ def main():
 
 		print("expected proportion", expected)
 		top_candidate_p = [ scipy.stats.binom_test(h, s, expected, alternative = "greater" ) for h, s in zip(outputDF.hits, outputDF.SNPs)]
-		
-		outputDF["top_candidate_p"] = top_candidate_p 
-#		outputDF["top_candidate_p"] = scipy.stats.binom_test(outputDF.hits, outputDF.SNPs, expected, alternative = "greater" ) 
+
+		outputDF["top_candidate_p"] = top_candidate_p
+#		outputDF["top_candidate_p"] = scipy.stats.binom_test(outputDF.hits, outputDF.SNPs, expected, alternative = "greater" )
 		expected_hits = [ scipy.stats.binom.ppf( 0.9999 , s, expected )  for s in outputDF.SNPs]
 
-		outputDF["expected_hits"] =  scipy.stats.binom.ppf( 0.9999 , outputDF.SNPs, expected )  
+		outputDF["expected_hits"] =  scipy.stats.binom.ppf( 0.9999 , outputDF.SNPs, expected )
 
 ## Calculate the top-candidate index
-#		outputDF = pd.concat(all_contigs)		
+#		outputDF = pd.concat(all_contigs)
 
 
 ## Write the dataframe to an output file
@@ -290,7 +271,3 @@ def main():
 
 
 main()
-
-
-
-
