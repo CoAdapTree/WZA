@@ -129,6 +129,7 @@ def main():
     count = 0
     for i in csv_gb:
         count +=1
+#        if count == 1000:break
     ## Grab the chunk of the annotation dict that matches
         relevant_annotations = annotations[annotations["seqname"] == i[0]].copy()
 
@@ -148,7 +149,7 @@ def main():
 ## The following condition will be met if there are no genes on the contig/chromosome
         if relevant_annotations.shape[0] == 0:
             out = SNP_df
-            out["attribute"] = "NA"
+            out["attribute"] = "noGeneContig"
 #            print(out)
             out["geneDist"] = "NA"
             out["geneName"] = "NA"

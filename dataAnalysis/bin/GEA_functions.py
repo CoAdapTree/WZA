@@ -107,7 +107,7 @@ def top_candidate( gea, thresh):
 
 	snps = gea.shape[0]
 
-	top_candidate_p = scipy.stats.binom_test(hits, snps, thresh, alternative = "greater" ) 
+	top_candidate_p = scipy.stats.binom_test(hits, snps, thresh, alternative = "greater" )
 
 
 	return top_candidate_p, hits
@@ -161,3 +161,44 @@ def top_candidate_group( gea, thresh, threshQuant, statistic, top_candidate_thre
 
 ## Return the resulting dataFrame
 #	return(TC)
+
+
+
+# A function for
+#
+
+def WZA_SNP_bins(input_gea, wza_column, snp_column, num_bins):
+
+#   WZA_SNP_bins(out_DF, wza_col = "Z_empP", snp_col = "SNPs"):
+	print(" hi tommy")
+
+	num_SNP_list = np.array( input_gea[snp_column] )
+	print(num_SNP_list.max())
+
+# I use Numpy's histogram function to get the bin edges
+	bin_edges = np.histogram( num_SNP_list, bins = num_bins )[1]
+
+	bin_edges[-1] = 1e6
+
+
+	intervals =  pd.IntervalIndex.from_breaks(bin_edges, closed = "left")
+
+	bin_names =np.array([str(k) for k in bin_edges ][0:-1])
+
+	gene_bins =  [ bin_names[intervals.contains(n)][0] for n in num_SNP_list ]
+
+
+#	return
+	input_gea["bin"] = gene_bins
+
+	approx_pVals = []
+	for gs in input_gea.groupby("bin"):
+		mean_Z = gs[1][wza_column].mean()
+		sd_Z = gs[1][wza_column].std()
+		temp =  -1*np.log10( 1-scipy.stats.norm.cdf( gs[1][wza_column], mean_Z, sd_Z) )
+		new = gs[1].copy()
+		new["approx_pVal"] = temp
+		approx_pVals.append( new )
+		print( new )
+
+	return( pd.concat(approx_pVals))

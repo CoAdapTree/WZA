@@ -86,11 +86,15 @@ def main():
 		except KeyError:
 ## It would be better if we did not have to do the following, if there was a sinlge name for each gene
 			splitter = row['gene'].split(";")[-1]#.split("=")[1])
+			print(splitter)
 			if len( splitter.split("=") ) == 2:
 				try:
 					OG =  species_dict[ args.species ][splitter.split("=")[1]]  # print(row['gene'])
 				except KeyError:
 					OG = "NA"
+				print("YP",splitter.split("=")[1])
+				print(OG)
+
 			else:
 				OG = "NA"
 		## do some string manipulation thing here

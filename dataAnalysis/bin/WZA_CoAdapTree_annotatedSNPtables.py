@@ -4,6 +4,28 @@ import numpy as np
 import sys, glob, argparse
 from GEA_functions import *
 
+def getLabelledDF(gea_dataframe, maxDist):
+
+# step 1, isolate SNPs on contigs with SNPs
+    step_1 = gea_dataframe[gea_dataframe["attribute"]!="noGeneContig"]
+#    print("s1",step_1)
+# step 2A, get all SNPs within genes
+    step_2A = step_1[step_1["attribute"]!="none"].copy()
+    step_2A["gene"] = step_2A["attribute"]
+
+# step 2B, get all SNPs within genes
+    step_2B = step_1[(step_1["attribute"]=="none")&(step_1["geneDist"] < maxDist)].copy()
+    step_2B["gene"] = step_2B["geneName"]
+#    print("2b", step_2B)
+#    step_1 = gea_dataframe["attribute"]!= "none"
+    out_csv = pd.concat([step_2A, step_2B])
+
+    return( out_csv )
+
+
+
+
+
 def correlationThreshold( corData, targetEnv, percentile_threshold = 99.9):
 ## Make an empty container to dump the pVals into
     pValues = []
@@ -46,6 +68,13 @@ def main():
             help = "[OPTIONAL] Give the number of SNPs you want to downsample to. Give -1 if you want to use the 75th percentile of the number of SNPs. Note that calculating the median within the script is slow, so you may want to run a dummy analysis, get the median number of SNPs then use that explicitly.",
             default = 0)
 
+    parser.add_argument("--snp_bins",
+            required = False,
+            dest = "snp_bins",
+            type = int,
+            help = "[OPTIONAL] Give the number of SNP bins you want to use when calculating approximate p-values",
+            default = 50)
+
     parser.add_argument("--resamples",
             required = False,
             dest = "resamples",
@@ -60,31 +89,44 @@ def main():
 
     args = parser.parse_args()
 
-    csv = pd.read_csv(args.correlations, sep = "\t")
+    csv = pd.read_csv(args.correlations )
+#    csv.columns = ["contig","pos","env","rho","pVal","MAF","emp_pVal", "attribute", "geneDist",  "geneName",  "length"]
 
-    csv.columns = ["contig","pos","env","rho","pVal","MAF","emp_pVal", "attribute"]
-
+    print(csv.info())
 
     if args.verbose:
         print("here's a peek at the input data")
         print(csv)
-    csv_genes = csv[csv["attribute"]!="none"]
-    csv_gb_gene = csv_genes.groupby("attribute")
+
+    max_dist = 5000
+
+    csv_genes = getLabelledDF( csv, max_dist )
+
+#    return
+    grouper = "gene"
+
+#    grouper = "attribute"
+
+    csv_genes = getLabelledDF( csv, max_dist )
+#    csv_genes = csv[csv["attribute"]!="none"]
+#    csv_genes = csv_genes[csv_genes["attribute"]!="noGeneContig"]
+
+    csv_gb_gene = csv_genes.groupby(grouper)
 
     if args.sample_snps == -1:
 ## Get a list of the number of SNPs per contig
 
-        csv_gb_gene_SNP_count = csv_genes.groupby("attribute")
+        csv_gb_gene_SNP_count = csv_genes.groupby(grouper)
 
         num_SNP_list = np.array( [s[1].shape[0] for s in csv_gb_gene_SNP_count] )
 
 #        num_SNP_list = np.array([contigSnpTable(SNPs, annotations[annotations["seqname"] == contig]).shape[0] for contig,SNPs in contigGenerator(args.correlations, env)])
 
 ## Calculate the 75th percentile of SNPs per gene
-        max_SNP_count = int(np.percentile(num_SNP_list[num_SNP_list!=0], 75))
+        max_SNP_count = int(np.percentile(num_SNP_list[num_SNP_list!=0], 95))
 
         if args.verbose:
-            print("Using the 75th percentile number of SNPs as the maximum in each gene:", max_SNP_count)
+            print("Using the 95th percentile number of SNPs as the maximum in each gene:", max_SNP_count)
 
     elif args.sample_snps == 0:
         max_SNP_count = int(1e6) # This is just a large number that is never going to be the number of SNPs within a gene
@@ -103,19 +145,20 @@ def main():
 
     for g in csv_gb_gene:
         count += 1
+        print(count, g[0])
+#        if count == 2000: break
         gene = g[0]
         gene_df = g[1].copy()
 
 ## Perform the WZA on the annotations in the contig using parametric ps
-        wza_pVal = WZA(gene_df, "pVal", varName = "Z_p")
+#        wza_pVal = WZA(gene_df, "pVal", varName = "Z_p")
 
         if gene_df.shape[0] <=max_SNP_count:
 ## Perform the WZA on the annotations in the contig using empirical ps
-            wza_emp_pVal = WZA(gene_df, "emp_pVal", varName = "Z_empP")
+            wza_emp_pVal = WZA(gene_df, "empirical_pvalue")
         else:
-            wza_emp_pVal = np.array( [ WZA(gene_df.sample(max_SNP_count), "emp_pVal", varName = "Z_empP") for i in range(args.resamples ) ] ).mean()
+            wza_emp_pVal = np.array( [ WZA(gene_df.sample(max_SNP_count), "empirical_pvalue") for i in range(args.resamples ) ] ).mean()
 
-#        print(wza_emp_pVal)
 
         if args.verbose:
             print("gene #:", count, "\tgene:", gene )
@@ -125,14 +168,18 @@ def main():
                     "SNPs":gene_df.shape[0],
                     "gene":gene,
                     "Z_empP":wza_emp_pVal,
-                    "Z_para":wza_pVal,
                     "pos":gene_df.pos.mean()}
 
         all_genes.append( output )
 
 #            input("\nPress Enter to continue...")
     out_DF =  pd.DataFrame( all_genes )
+
+
+    new_output = WZA_SNP_bins(out_DF, "Z_empP", "SNPs", args.snp_bins )
+    print(new_output)
     out_DF.to_csv(args.output, index = False)
+    new_output.to_csv(args.output, index = False)
 
 
 main()
